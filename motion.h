@@ -1,4 +1,5 @@
-//Codigo para el control de los motores
+//AUTHOR: Jaime de Castro 14708
+//Codigo para el control del movimiento de los motores
 
 
 #ifndef _MOTION_H_
@@ -6,6 +7,8 @@
 
 #include <stdint.h>
 #include "driver/motor.h"
+
+uint8_t homeZ();
 
 uint8_t getState();
 
