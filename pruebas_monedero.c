@@ -1,11 +1,3 @@
-/*
- * GccApplication2.c
- *
- * Created: 09/04/2019 17:47:08
- * Author : Admin
- */ 
-
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
