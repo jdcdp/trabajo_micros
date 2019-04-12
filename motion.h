@@ -31,6 +31,3 @@ void releaseProduct(uint8_t num);
 
 
 
-//definiciones
-
-
