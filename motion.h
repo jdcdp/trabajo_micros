@@ -8,13 +8,23 @@
 #include <stdint.h>
 #include "driver/motor.h"
 
-uint8_t homeZ();
+void homeAll();
 
-uint8_t getState();
+void homeZ();
 
-uint8_t sendPos(uint8_t num);
+void homeX();
 
-uint8_t releaseProduct(uint8_t num);
+void moveZ(uint16_t position);
+
+void moveX(uint8_t position);
+
+void moveY();
+
+void stopY();
+
+uint8_t getState();//depende de la integracion
+
+void releaseProduct(uint8_t num);
 
 #endif
 

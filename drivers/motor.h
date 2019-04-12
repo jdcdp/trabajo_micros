@@ -4,9 +4,7 @@
 #define _MOTOR_H_
 
 #include <stdint.h>
-#include "time_m.h"
-//#include "macros.h"
-#include "pins.h"
+#include "pinout.h"
 
 #define M1 0
 #define M2 1
@@ -23,6 +21,7 @@
 #define MAXSPEEDM3 255
 #define MAXSPEEDM4 255
 
+/* Not used yet
 #define INVMOTORM1 0
 #define INVMOTORM2 0
 #define INVMOTORM3 0
@@ -32,16 +31,39 @@
 #define BRAKEFEATUREM2 0
 #define BRAKEFEATUREM3 0
 #define BRAKEFEATUREM4 0
+*/
+
 
 typedef struct motor {
 uint8_t dir=1;
 uint8_t spd=0;
 uint8_t en=0;
 uint16_t pos;
+uint16_t fpos;
 } motor[4];
 
-uint8_t setSpeed(uint8_t motor);
+void disableMotor(uint8_t motnum);
 
-uint8_t setDir(uint8_t motor,);
+void enableMotor(uint8_t motnum);
+
+uint8_t setSpeed(uint8_t motnum,uint8_t spd);
+
+void setDir(uint8_t motnum,uint8_t direction);
+
+void setWantedPos(uint16_t wpos, uint8_t motnum);
+
+void getPos(uint8_t motnum);
+
+
+ISR(SW1);
+ISR(SW2);
+ISR(SW3);
+ISR(SW4);
+ISR(SW5);
+ISR(SW6);
+ISR(SW7);
+ISR(S03);
+ISR(S04);
+
 
 #endif
