@@ -46,13 +46,13 @@ void add_saldo(int ultima_moneda){
 	if(ultima_moneda==1){
 		saldo+=0.10;
 	}
-	else if((ultima_moneda==2) && (relacion < C20MAX)){
+	else if((ultima_moneda==2){
 		saldo+=0.20;
 	}
-	else if((ultima_moneda==3) && (relacion < C50MAX)){
+	else if((ultima_moneda==3){
 		saldo+=0.50;
 	}
-	else if((ultima_moneda==4) && (relacion < E1MAX)){
+	else if(ultima_moneda==4){
 		saldo+=1;
 	}
 }
