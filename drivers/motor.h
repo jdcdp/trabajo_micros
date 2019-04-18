@@ -1,5 +1,5 @@
 //AUTHOR: Jaime de Castro 14708
-
+//Motor control
 #ifndef _MOTOR_H_
 #define _MOTOR_H_
 
@@ -54,6 +54,7 @@ void setWantedPos(uint16_t wpos, uint8_t motnum);
 
 void getPos(uint8_t motnum);
 
+void update_pwm();
 
 ISR(SW1);
 ISR(SW2);

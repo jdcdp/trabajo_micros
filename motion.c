@@ -35,32 +35,37 @@ void homeZ(){
 void moveZ(uint16_t position){
   setWantedPos(M1,position);
   setWantedPos(M2,position);
+  enableMotor(M1);
+  enableMotor(M2);
 }
 
 void moveX(uint8_t position){
   setWantedPos(M3,position);
-  if(getPos()>position)
-  setDir(M3,(getPos(M3)>))
-
+  /*tpos=getpos();                           set direction?
+  if(tpos!=position){
+    setDir(M3,(getPos(M3)>tpos))//check this direction
+  }*/
+  enableMotor(M3);
 }
 
 
 void moveY(){
-  setDir(M4,UP);
+  setDir(M4,UP);//check this direction
   enableMotor(M4);
   setSpeed(M4,MAXY);
 }
 
 void stopY(){
-  disableMotor(M3)
+  disableMotor(M4)
 }
 
 
 uint8_t getState(){
+
 }
 
 
 void releaseProduct(uint8_t num){
-
+//product to axes table
 }
 
