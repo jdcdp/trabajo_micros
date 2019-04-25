@@ -3,6 +3,7 @@
 
 
 #include "motion.h"
+#include "driver/motor.h"
 
 uint8_t init(){
 //set interrupts:
@@ -67,5 +68,6 @@ uint8_t getState(){
 
 void releaseProduct(uint8_t num){
 //product to axes table
+
 }
 

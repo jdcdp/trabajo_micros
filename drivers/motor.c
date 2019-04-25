@@ -6,6 +6,8 @@ void update_pwm(){
   for(i=0;i<4;i++){
     if(motor[i].en){
       pwm(i,motor[i].spd,motor[i].dir);
+	//More to do...
+
     }
   }
 }
@@ -28,6 +30,7 @@ void disableMotor(uint8_t motnum){
 
 void enableMotor(uint8_t motnum){
   motor[motnum].en=1;
+  update_pwm();
 }
 
 void setDir(uint8_t motnum, uint8_t direction){

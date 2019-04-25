@@ -6,7 +6,6 @@
 #define _MOTION_H_
 
 #include <stdint.h>
-#include "driver/motor.h"
 
 void homeAll();
 
