@@ -21,6 +21,9 @@
 #define MAXSPEEDM3 255
 #define MAXSPEEDM4 255
 
+#define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
+#define SLOW_CONTACT 20 /*Slow speed (up to 255) for M3 alignment*/
+
 /* Not used yet
 #define INVMOTORM1 0
 #define INVMOTORM2 0

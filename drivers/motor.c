@@ -109,20 +109,26 @@ ISR(SO4){//Optical Encoder M2
 
 ISR(SW7){//Position detector M3
 //codigo antirrebotes
+
+  if((motor[M3].pos==motor[M3].fpos) && (motor[M3].dir==LEFT)){
+    //if slow...
+    delay(TOUCH_DELAY);
+    setSpeed(M3,SLOW_CONTACT);
+    setDir(M3,RIGHT);
+
+  }
+
   if(motor[M3].dir==LEFT){
     motor[M3].pos++;
   }
   else{
     motor[M3].pos--;
   }
-  if(motor[M3].pos==motor[M3].fpos){
-    touch_pos();
-  }
 }
 
 
 /*
-ISR(SW10) Level Sensors
+ISR(SW10) Level Sensors , I don't need them
 ISR(SW11)
-ISR(SW8) Quarter step M4, I don't need it
+ISR(SW8) Quarter step M4, I don't need it. Maybe add if there are enough pins
 */
