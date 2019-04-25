@@ -21,10 +21,9 @@
 
 **void releaseProduct(uint8_t num)**: Se posiciona en el producto "num" segun la siguiente tabla:
 
----
 
 
-|   | 1 | 2 | 3 |
-|---|---|---|---|
-|   | 4 | 5 | 6 |
-|   | 7 | 8 | 9 |
+| 1 | 2 | 3 |
+|---|---|---|
+| 4 | 5 | 6 |
+| 7 | 8 | 9 |
