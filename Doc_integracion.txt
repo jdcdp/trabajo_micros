@@ -1,36 +1,36 @@
-Documento para integraciÛn
+Documento para integraci√≥n
 
 Coin.c : 
 Funciones:	-get_saldo : calcula el saldo
-		-get_ultima_moneda : coge el valor de la ˙ltima moneda introducida
- 	-calculate_ultima_moneda : calcula el valor de la moneda introducida
-		-add_saldo : aÒade el valor de la ultima moneda al saldo total
+		-get_ultima_moneda : coge el valor de la √∫ltima moneda introducida
+ 		-calculate_ultima_moneda : calcula el valor de la moneda introducida
+		-add_saldo : a√±ade el valor de la ultima moneda al saldo total
 		-setup_coin : setup. 
 Interrupciones:	-Sensor Optico 1 y 2 : por flanco de subida (la moneda entra) y de bajada (sale)
 Motor.c :
-Funciones : 	-update_pwm : ø?
-		-setSpeed : cambia la velocidad de un motor con par·metros el n˙mero del motor y la velocidad deseada
-		-disable/enableMotor : ìenablesî un motor o no
-		-setDir : da la direcciÛn a un motor con par·metros el n˙mero del motor y la direcciÛn deseada
-		-setWantedPos : da la posiciÛn a la cual debe posicionarse un motor, con par·metros el n˙mero del motor y la posiciÛn deseada
-		-getPos : returns la posiciÛn en la cual est· el motor dado en par·metros
+Funciones : 	-update_pwm : ¬ø?
+		-setSpeed : cambia la velocidad de un motor con par√°metros el n√∫mero del motor y la velocidad deseada
+		-disable/enableMotor : ‚Äúenables‚Äù un motor o no
+		-setDir : da la direcci√≥n a un motor con par√°metros el n√∫mero del motor y la direcci√≥n deseada
+		-setWantedPos : da la posici√≥n a la cual debe posicionarse un motor, con par√°metros el n√∫mero del motor y la posici√≥n deseada
+		-getPos : returns la posici√≥n en la cual est√° el motor dado en par√°metros
 Interrupciones :	-SW1 to SW6 : Endstops M1_HIGH/LOW hasta M3_HIGH/LOW
 			-SO3 : Optical Encoder del motor M1 (vertical)
 			-SO4 : Optical Encoder del motor M2 (vertical)
 			-SW7 : Detector de la posicion M3
 Time_m.c :
-Funciones :	-init_timers : Inicializa timer para delays de la duraciÛn que quieremos
-		-micros : interrupciÛn que sume 1 a micros_total (??)
-		-delays : aÒade un delay
+Funciones :	-init_timers : Inicializa timer para delays de la duraci√≥n que quieremos
+		-micros : interrupci√≥n que sume 1 a micros_total (??)
+		-delays : a√±ade un delay
 
 Motion.c :
 Funciones :	-init : inicializa las interrupciones
-		-homeALL : Pone todos los motores a posiciÛn de home
-		-homeX : Pone M3 a posiciÛn de home
-		-homeZ : Pone M1 y M2 a posiciÛn de home
-		-moveZ : Pone M1 y M2 a la posiciÛn deseada (axis Z) y lo activa
-		-moveX : Pone M3 a la posiciÛn deseada (axis X) y lo activa
-		-moveY : Pone M4 a la posiciÛn deseada (axis Y) y lo activa = saca los sweets
+		-homeALL : Pone todos los motores a posici√≥n de home
+		-homeX : Pone M3 a posici√≥n de home
+		-homeZ : Pone M1 y M2 a posici√≥n de home
+		-moveZ : Pone M1 y M2 a la posici√≥n deseada (axis Z) y lo activa
+		-moveX : Pone M3 a la posici√≥n deseada (axis X) y lo activa
+		-moveY : Pone M4 a la posici√≥n deseada (axis Y) y lo activa = saca los sweets
 		-stopY : Para el motor M4 (para de sacar los sweets)
 		-releaseProduct :  Se posiciona en el producto "num" segun el teclado
 
