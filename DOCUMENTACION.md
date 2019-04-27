@@ -1,29 +1,75 @@
 
 # Documentación de las librerias
 
+
+##Funciones comunes:
+
+&nbsp;
+
+&nbsp;
+Por Rellenar
+&nbsp;
+
+&nbsp;
+
+##Sensor de monedas(coin.h):
+
+**Funciones:**
+
+-   *get_saldo:* calcula el saldo
+
+-   *get_ultima_moneda :* coge el valor de la última moneda introducida
+
+-   *calculate_ultima_moneda :* calcula el valor de la moneda introducida
+
+-   *add_saldo :* añade el valor de la ultima moneda al saldo total
+
+-   *setup_coin :* setup.
+
+&nbsp;
+
+**Interrupciones:**
+
+-   *Sensores Ópticos 1 y 2 (SO1,SO2):* 
+
+
 ##Control del movimiento(motion.h):
 
-**void homeAll()**: hace un home para todos los ejes
+**Funciones:**
 
-**void homeZ()**: home vertical hacia abajo
+  - *void homeAll()*: hace un home para todos los ejes
 
-**void homeX()**: home horizontal hacia la derecha
+  - *void homeZ()*: home vertical hacia abajo
 
-**void moveZ(uint16_t position)**: posicion manual del eje z, no es necesaria
+  - *void homeX()*: home horizontal hacia la derecha
 
-**void moveX(uint8_t position)**: posicion manual del eje x, no es necesaria
+  - *void moveZ(uint16_t position)*: posicion manual del eje z, no es necesaria
 
-**void moveY()**: activa el dispensador
+  - *void moveX(uint8_t position)*: posicion manual del eje x, no es necesaria
 
-**void stopY()**: para el dispensador
+  - *void moveY()*: activa el dispensador
 
-**uint8_t getState()**: de momento no hace nada pero puede servir para dar  información de la posicion actual
+  - *void stopY()*: para el dispensador
 
-**void releaseProduct(uint8_t num)**: Se posiciona en el producto "num" segun la siguiente tabla:
+  - *uint8_t getState()*: de momento no hace nada pero puede servir para dar  información de la posicion actual
 
+   - *void releaseProduct(uint8_t num)*: Se posiciona en el producto "num" segun la siguiente tabla:
 
+&nbsp;
 
 | 1 | 2 | 3 |
 |---|---|---|
 | 4 | 5 | 6 |
 | 7 | 8 | 9 |
+
+&nbsp;
+**Interrupciones:**
+
+- SW1 to SW6 : Endstops M1_HIGH/LOW hasta M3_HIGH/LOW
+
+- SO3 : Optical Encoder del motor M1 (vertical)
+
+- SO4 : Optical Encoder del motor M2 (vertical)
+
+- SW7 : Detector de posicion M3
+
