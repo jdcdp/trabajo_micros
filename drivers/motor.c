@@ -5,8 +5,13 @@
 void update_pwm(){
   for(i=0;i<4;i++){
     if(motor[i].en){
-      pwm(i,motor[i].spd,motor[i].dir);
+      //what about direction
+      pwm(i,motor[i].spd);
 	//More to do...
+
+    }
+    else{
+      
 
     }
   }

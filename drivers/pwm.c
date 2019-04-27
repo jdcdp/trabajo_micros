@@ -2,11 +2,13 @@
 //PWM code
 #include "pwm.h"
 
-void init(){
+void init_pwm(){
 
 }
 
 void pwm(){
+
+
 
 }
 
