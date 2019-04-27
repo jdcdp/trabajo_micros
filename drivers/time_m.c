@@ -7,11 +7,11 @@
 void setup_time(){
         cli();
 
-        TIME_TCCR =0x02; //Modo CTC
+        TIME_TCCRA = 0x02; //Modo CTC
 
-        TIME_OCR =TIME_MAX; //Set timer TOP_A
+        TIME_OCR = TIME_MAX; //Set timer TOP_A
 
-        TIME_TCCR=0x01; //Preescalado de 0, cuenta cada us (1MHz)
+        TIME_TCCRB = 0x01; //Preescalado de 0, cuenta cada us (1MHz)
 
         TIMSK0 |= (1 << OCIE0A); //Enable Interrupt from CTC_A
 

@@ -3,7 +3,6 @@
 
 
 #include "motion.h"
-#include "driver/motor.h"
 
 uint8_t init(){
 //set interrupts:

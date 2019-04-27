@@ -4,7 +4,7 @@
 #define _MOTOR_H_
 
 #include <stdint.h>
-#include "pinout.h"
+#include "../pinout.h"
 
 #define M1 0
 #define M2 1
