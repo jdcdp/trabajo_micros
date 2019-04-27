@@ -2,7 +2,7 @@
 # Documentación de las librerias
 
 
-##Funciones comunes:
+## Funciones comunes:
 
 &nbsp;
 
@@ -12,7 +12,7 @@ Por Rellenar
 
 &nbsp;
 
-##Sensor de monedas(coin.h):
+## Sensor de monedas(coin.h):
 
 **Funciones:**
 
@@ -33,7 +33,7 @@ Por Rellenar
 -   *Sensores Ópticos 1 y 2 (SO1,SO2):* 
 
 
-##Control del movimiento(motion.h):
+## Control del movimiento(motion.h):
 
 **Funciones:**
 
