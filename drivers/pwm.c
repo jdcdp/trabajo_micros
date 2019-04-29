@@ -12,7 +12,7 @@ void init_pwm(){
 
         PWM_TCCRA = 0b11111101; //set toggle in all channels
 
-        PWM_TCCRB = 1 << WGM53| 1 << CS51; //set phase-freq correct PWM and preescaler x8
+        PWM_TCCRB = (1 << WGM53) | (1 << CS51); //set phase-freq correct PWM and preescaler x8
 
         PWM_OCR_M1 = 0; //set al outputs to 0
 
