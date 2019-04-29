@@ -8,10 +8,6 @@
 #include "drivers/motor.h"
 #include <stdint.h>
 
-#define MAXX 255
-#define MAXY 255
-#define MAXZ 255
-
 void homeAll();
 
 void homeZ();

@@ -8,6 +8,9 @@ uint8_t init(){
 //set interrupts:
 //-level sensor
 //-optical endstops
+motorSetup();
+homeAll();
+return 0;
 }
 
 void homeAll(){
@@ -17,15 +20,15 @@ void homeAll(){
 
 void homeX(){
   setDir(M3,RIGHT);
-  SetSpeed(M3, 0.5*MAXX);
+  SetSpeed(M3, 0.5*MAXSPEED);
   enableMotor(M3);
 }
 
 void homeZ(){
   setDir(M1, UP);
-  setSpeed(M1, 0.5*MAXZ);
+  setSpeed(M1, 0.5*MAXSPEED);
   setDir(M2, UP);
-  setSpeed(M2, 0.5*MAXZ);
+  setSpeed(M2, 0.5*MAXSPEED);
   enableMotor(M1);
   enableMotor(M2);
 }
@@ -39,20 +42,21 @@ void moveZ(uint16_t position){
   enableMotor(M2);
 }
 
-void moveX(uint8_t position){
+void moveX(uint8_t position){ //REVISAR ESTA FUNCION
   setWantedPos(M3,position);
-  /*tpos=getpos();                           set direction?
+  tpos=getpos();
   if(tpos!=position){
     setDir(M3,(getPos(M3)>tpos))//check this direction
-  }*/
-  enableMotor(M3);
+    enableMotor(M3);
+    setSpeed(M3,0.5*MAXSPEED)
+  }
 }
 
 
 void moveY(){
   setDir(M4,UP);//check this direction
   enableMotor(M4);
-  setSpeed(M4,MAXY);
+  setSpeed(M4,MAXSPEED);
 }
 
 void stopY(){

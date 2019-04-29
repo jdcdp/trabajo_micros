@@ -10,16 +10,12 @@
 #define M2 1
 #define M3 2
 #define M4 3
-#define MAX 255
 #define UP 1
 #define DOWN 0
 #define RIGHT 0
 #define LEFT 1
 
-#define MAXSPEEDM1 255
-#define MAXSPEEDM2 255
-#define MAXSPEEDM3 255
-#define MAXSPEEDM4 255
+#define MAXSPEED 255
 
 #define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
 #define SLOW_CONTACT 20 /*Slow speed (up to 255) for M3 alignment*/
@@ -45,6 +41,8 @@ uint16_t pos;
 uint16_t fpos;
 } motor[4];
 
+void motorSetup();
+
 void disableMotor(uint8_t motnum);
 
 void enableMotor(uint8_t motnum);
@@ -58,16 +56,6 @@ void setWantedPos(uint16_t wpos, uint8_t motnum);
 void getPos(uint8_t motnum);
 
 void update_pwm();
-
-ISR(SW1);
-ISR(SW2);
-ISR(SW3);
-ISR(SW4);
-ISR(SW5);
-ISR(SW6);
-ISR(SW7);
-ISR(S03);
-ISR(S04);
 
 
 #endif

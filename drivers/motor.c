@@ -2,34 +2,53 @@
 //Motor control
 #include "motor.h"
 
+void motorSetup(){
+cli();
+ENDSTOPDDR=0x00;//Mejor usar la funcion changepin
+//M1DDR=0b11
+sei();
+}
+
+
+
+
 void update_pwm(){
   for(i=0;i<4;i++){
     if(motor[i].en){
-      //what about direction
+      switch(i)
+	case M1: M1DIR=motor[i].dir;
+	case M2: M2DIR=motor[i].dir;
+	case M3: M3DIR=motor[i].dir;
+	case M4: M4DIR=motor[i].dir;
       pwm(i,motor[i].spd);
 	//More to do...
 
     }
     else{
-      
-
+      pwm(i,0);
     }
   }
 }
 
 uint8_t setSpeed(uint8_t motnum,uint8_t spd){
 
+  if (spd>MAXSPEED) {
+    spd=MAXSPEED;
+  }
+
   if(motor[motnum].en){
     speed[motor]=spd;
     update_pwm();
     return 0;
   }
-  else return 1;
+  else {
+    //PRINT ERROR: MOTOR DISABLED
+    return 1;
 }
 
 void disableMotor(uint8_t motnum){
   motor[motnum].en=0;
-//  motor[motnum].spd=0;//es necesario?
+  motor[motnum].spd=0;
   update_pwm();
 }
 
@@ -45,6 +64,7 @@ void setDir(uint8_t motnum, uint8_t direction){
   else {
      motor[motnum].dir=0;
   }
+  update_pwm();
 }
 
 void setWantedPos(uint16_t wpos, uint8_t motnum){
@@ -56,7 +76,7 @@ uint16_t getPos(uint8_t motnum){
 }
 
 
-
+/*					USE PCINT INSTEAD
 ISR(SW1){ //Endstop M1_HIGH
   disableMotor(M1);
   setDir(M1,DOWN);
@@ -112,7 +132,7 @@ ISR(SO4){//Optical Encoder M2
   update_pwm();
 }
 
-ISR(SW7){//Position detector M3
+ISR(SW7){//Position detector M3             //NO TERMINADA
 //codigo antirrebotes
 
   if((motor[M3].pos==motor[M3].fpos) && (motor[M3].dir==LEFT)){
@@ -125,13 +145,23 @@ ISR(SW7){//Position detector M3
 
   if(motor[M3].dir==LEFT){
     motor[M3].pos++;
+    if(motor[M3].pos==motor[M3].fpos) {
+    	if(motor[M3].speed==SLOW_CONTACT) {
+		disableMotor(M3);
+	}
+	else {
+    		delay(TOUCH_DELAY);
+    		setSpeed(M3,SLOW_CONTACT);
+    		setDir(M3,RIGHT);
+	}
+
+
   }
   else{
     motor[M3].pos--;
   }
 }
-
-
+*/
 /*
 ISR(SW10) Level Sensors , I don't need them
 ISR(SW11)
