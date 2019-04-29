@@ -39,6 +39,7 @@
 #define PWM_OCR_M2  	OCR1B
 #define PWM_OCR_M3  	OCR1C
 #define PWM_TOP     	ICR1
+#define PWM_MAX		0xFFFF
 
 //drivers/motor.h
 #define ENDSTOPS	PORTB
@@ -67,7 +68,9 @@ void init_pwm(){
 
 	PWM_OCR_M3 = 0;
 	
-	PWM_TOP=255;
+	PWM_TOP=PWM_MAX;
+	
+	TIMSK1=0b00001110;
 
 	sei();
 }
@@ -77,8 +80,8 @@ void pwm(uint8_t motnum, uint8_t speed){
 	switch(motnum){
 
 		case M1 : PWM_OCR_M1=speed;
-		case M2 : PWM_OCR_M2=speed;
 		case M3 : PWM_OCR_M3=speed;
+		case M2 : PWM_OCR_M2=speed;
 	}
 }
 
@@ -86,9 +89,10 @@ void pwm(uint8_t motnum, uint8_t speed){
 int main(void)
 {	    init_pwm();
     	//PORTB=1<<7;
-		pwm(0,100); //PIN6
-		pwm(1,200); //PIN7
-		pwm(2,255); //PIN8
+		pwm(0,PWM_MAX*0.5); //PIN6
+		pwm(1,PWM_MAX); //PIN7
+		pwm(2,0); //PIN8
 		
 		while(1) {}
 }
+
