@@ -32,13 +32,13 @@
 #define TIME_TCCRB	TCCR0B
 
 //drivers/pwm.h
-#define PWM_TCCRA 	TCCR5A
-#define PWM_TCCRB 	TCCR5B
-#define PWM_TCCRC 	TCCR5C
-#define PWM_OCR_M1  	OCR5A
-#define PWM_OCR_M2  	OCR5B
-#define PWM_OCR_M3  	OCR5A
-#define PWM_TOP     	ICR5
+#define PWM_TCCRA 	TCCR1A
+#define PWM_TCCRB 	TCCR1B
+#define PWM_TCCRC 	TCCR1C
+#define PWM_OCR_M1  	OCR1A
+#define PWM_OCR_M2  	OCR1B
+#define PWM_OCR_M3  	OCR1A
+#define PWM_TOP     	ICR1
 
 //drivers/motor.h
 #define ENDSTOPS	PORTB
