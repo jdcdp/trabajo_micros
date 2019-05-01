@@ -5,7 +5,7 @@
 #include "pwm.c"
 #include "pinout.h"
 
-#define PWM_MAX      0xFF
+#define PWM_MAX      0xFFFF
 
 void init_pwm();
 

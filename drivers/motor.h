@@ -15,7 +15,7 @@
 #define RIGHT 0
 #define LEFT 1
 
-#define MAXSPEED 255
+#define MAXSPEED 0xFFFF
 
 #define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
 #define SLOW_CONTACT 20 /*Slow speed (up to 255) for M3 alignment*/
@@ -37,13 +37,13 @@
 
 typedef struct motor {
 uint8_t dir=1;
-uint8_t spd=0;
+uint16_t spd=0;
 uint8_t en=0;
 uint16_t pos;
 uint16_t fpos;
 } motor[4];
 
-uint8_t endstop_state=0;
+uint16_t endstop_state=0;
 
 
 //Functions
@@ -54,7 +54,7 @@ void disableMotor(uint8_t motnum);
 
 void enableMotor(uint8_t motnum);
 
-uint8_t setSpeed(uint8_t motnum,uint8_t spd);
+uint8_t setSpeed(uint8_t motnum,uint16_t spd);
 
 void setDir(uint8_t motnum,uint8_t direction);
 
@@ -64,5 +64,24 @@ void getPos(uint8_t motnum);
 
 void update_pwm();
 
+ISR_SW1();
+
+ISR_SW2();
+
+ISR_SW3();
+
+ISR_SW4();
+
+ISR_SW5();
+
+ISR_SW6();
+
+ISR_SW7();
+
+ISR_SW8();
+
+ISR_SO3();
+
+ISR_SO4();
 
 #endif

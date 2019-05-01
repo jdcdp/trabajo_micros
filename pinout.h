@@ -39,7 +39,7 @@
 #define PWM_OCR_M2  	OCR1B
 #define PWM_OCR_M3  	OCR1A
 #define PWM_TOP     	ICR1
-
+#define PWM_DDR		DDRB
 //drivers/motor.h
 #define ENDSTOPS	PINB
 #define ENSTOP_INTERRUPT PCINT0_vect
