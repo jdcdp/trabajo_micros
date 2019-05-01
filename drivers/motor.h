@@ -20,6 +20,7 @@
 #define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
 #define SLOW_CONTACT 20 /*Slow speed (up to 255) for M3 alignment*/
 
+
 /* Not used yet
 #define INVMOTORM1 0
 #define INVMOTORM2 0
@@ -32,6 +33,7 @@
 #define BRAKEFEATUREM4 0
 */
 
+//Variables and types
 
 typedef struct motor {
 uint8_t dir=1;
@@ -40,6 +42,11 @@ uint8_t en=0;
 uint16_t pos;
 uint16_t fpos;
 } motor[4];
+
+uint8_t endstop_state=0;
+
+
+//Functions
 
 void motorSetup();
 

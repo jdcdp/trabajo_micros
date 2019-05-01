@@ -41,6 +41,8 @@
 #define PWM_TOP     	ICR1
 
 //drivers/motor.h
-#define ENDSTOPS	PORTB
+#define ENDSTOPS	PINB
+#define ENSTOP_INTERRUPT PCINT0_vect
+
 
 #endif

@@ -55,7 +55,7 @@ void init_pwm(){
 	cli();
 
 	DDRB= 1<<DDB7 | 1<<DDB6 | 1<<DDB5; //output on all pins
-    
+
 	PWM_TOP = PWM_MAX;
 
 	PWM_TCCRA = 0b01010100; //set toggle in all channels
@@ -67,9 +67,9 @@ void init_pwm(){
 	PWM_OCR_M2 = 0;
 
 	PWM_OCR_M3 = 0;
-	
+
 	PWM_TOP=PWM_MAX;
-	
+
 	TIMSK1=0b00001110;
 
 	sei();

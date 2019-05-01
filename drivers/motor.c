@@ -2,10 +2,12 @@
 //Motor control
 #include "motor.h"
 
+
 void motorSetup(){
 cli();
-ENDSTOPDDR=0x00;//Mejor usar la funcion changepin
-//M1DDR=0b11
+ENDSTOPDDR=0;
+endstop_state=ENDSTOPS;
+//DO I NEED TIMSK1 ?
 sei();
 }
 
@@ -20,7 +22,8 @@ void update_pwm(){
 	case M2: M2DIR=motor[i].dir;
 	case M3: M3DIR=motor[i].dir;
 	case M4: M4DIR=motor[i].dir;
-      pwm(i,motor[i].spd);
+      //pwm(i,motor[i].spd);
+	PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
 	//More to do...
 
     }
@@ -74,6 +77,22 @@ void setWantedPos(uint16_t wpos, uint8_t motnum){
 uint16_t getPos(uint8_t motnum){
   return motor[motnum].pos;
 }
+
+
+
+ISR(ENDSTOP_INTERRUPT){
+
+
+
+
+delay(10);
+
+
+
+}
+
+
+
 
 
 /*					USE PCINT INSTEAD
