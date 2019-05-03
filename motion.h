@@ -12,6 +12,7 @@
 #define ENC2FLOOR2 200
 #define ENC2FLOOR3 300
 
+void motion_init();
 
 void homeAll();
 

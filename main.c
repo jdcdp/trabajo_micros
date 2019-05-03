@@ -1,3 +1,4 @@
+#include <avr/io.h>
 #include "teclado.h"
 #include "motion.h"
 #include "coin.h"
@@ -5,8 +6,7 @@
 
 void init(){
 // Aqui se llaman a las funciones de inicialización
-
-
+motion_init();
 
 }
 

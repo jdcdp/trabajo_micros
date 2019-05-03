@@ -3,14 +3,14 @@
 
 
 #include "motion.h"
+#include "drivers/motor.h"
 
-uint8_t init(){
+void motion_init(){
 //set interrupts:
 //-level sensor
 //-optical endstops
 motorSetup();
 homeAll();
-return 0;
 }
 
 void homeAll(){
@@ -20,7 +20,7 @@ void homeAll(){
 
 void homeX(){
   setDir(M3,RIGHT);
-  SetSpeed(M3, 0.5*MAXSPEED);
+  setSpeed(M3, 0.5*MAXSPEED);
   enableMotor(M3);
 }
 
@@ -44,16 +44,15 @@ void moveZ(uint16_t position){
 
 void moveX(uint8_t position){
   setWantedPos(M3,position);
-  curr_pos=getpos(M3);
-  setDir(M3,(curr_pos<tpos));
-  if(curr_pos!=position){
+  setDir(M3,(getPos(M3)<position));
+  if(getPos(M3)!=position){
     enableMotor(M3);
     setSpeed(M3,0.5*MAXSPEED);
   }
-  else{
+  /*else{ //check sensor before moving
     enableMotor(M3);
     setSpeed(M3,SLOW_CONTACT);
-  }
+  }*/
 }
 
 
@@ -94,3 +93,6 @@ void selectProduct(uint8_t num){
   }
 }
 
+int main(){
+return 0;
+}

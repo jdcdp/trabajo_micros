@@ -2,7 +2,7 @@
 #define TIME_M_H_
 
 
-#include "pinout.h"
+#include "../pinout.h"
 
 #define TIME_MAX 100 //0.1ms
 
@@ -11,7 +11,7 @@ uint64_t micros_total=0;
 
 void setup_timers();
 
-void micros();
+uint64_t micros();
 
 void delay(uint8_t ms);
 

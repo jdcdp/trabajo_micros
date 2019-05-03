@@ -7,8 +7,8 @@
 
 //void abrir_puerta(){
 
-}
+
 
 //void cerrar_puerta(){
 
-}
+

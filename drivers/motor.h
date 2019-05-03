@@ -35,9 +35,9 @@
 //Variables and types
 
 typedef struct motor {
-uint8_t dir=1;
-uint16_t spd=0;
-uint8_t en=0;
+uint8_t dir;
+uint16_t spd;
+uint8_t en;
 uint16_t pos;
 uint16_t fpos;
 } motor[4];
@@ -61,28 +61,28 @@ void setDir(uint8_t motnum,uint8_t direction);
 
 void setWantedPos(uint16_t wpos, uint8_t motnum);
 
-void getPos(uint8_t motnum);
+uint16_t getPos(uint8_t motnum);
 
 void update_pwm();
 
-ISR_SW1();
+void ISR_SW1();
 
-ISR_SW2();
+void ISR_SW2();
 
-ISR_SW3();
+void ISR_SW3();
 
-ISR_SW4();
+void ISR_SW4();
 
-ISR_SW5();
+void ISR_SW5();
 
-ISR_SW6();
+void ISR_SW6();
 
-ISR_SW7();
+void ISR_SW7();
 
-ISR_SW8();
+void ISR_SW8();
 
-ISR_SO3();
+void ISR_SO3();
 
-ISR_SO4();
+void ISR_SO4();
 
 #endif

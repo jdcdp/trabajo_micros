@@ -3,7 +3,7 @@
 #ifndef _PWM_H_
 #define _PWM_H_
 #include "pwm.c"
-#include "pinout.h"
+#include "../pinout.h"
 
 #define PWM_MAX      0xFFFF
 

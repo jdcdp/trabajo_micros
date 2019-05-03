@@ -4,23 +4,24 @@
 
 
 void motorSetup(){
-cli();
-ENDSTOPDDR=0;
-endstop_state=ENDSTOPS;//compare variable for pcint change detection
-sei();
+  cli();
+  ENDSTOPDDR=0;
+  endstop_state=ENDSTOPS;//compare variable for pcint change detection
+  sei();
 }
 
 void update_pwm(){
-  for(i=0;i<4;i++){
+  for(int i=0;i<4;i++){
     if(motor[i].en){
-      switch(i)
+      switch(i){
 	case M1: M1DIR=motor[i].dir;
 	case M2: M2DIR=motor[i].dir;
 	case M3: M3DIR=motor[i].dir;
 	case M4: M4DIR=motor[i].dir;
-        pwm(i,motor[i].spd);//deberia funcionar
-	//PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
-	//More to do...?
+      }
+      pwm(i,motor[i].spd);//deberia funcionar
+      //PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
+      //More to do...?
     }
     else{
       pwm(i,0);
@@ -34,7 +35,7 @@ uint8_t setSpeed(uint8_t motnum,uint16_t spd){
     spd=MAXSPEED;
   }
 
-  if(motor[motnum].en){
+  if (motor[motnum].en){
     motor[motnum].spd=spd;
     update_pwm();
     return 0;
@@ -84,9 +85,7 @@ ISR(ENDSTOP_INTERRUPT){
 
 //Set interrupt mask to disable bounces
 
-uint8_t temp;
-
-switch(ENDSTOPS ^ endstop_state){
+  switch(ENDSTOPS ^ endstop_state){
 
 	case 1: ISR_SW1;
 
@@ -109,13 +108,13 @@ switch(ENDSTOPS ^ endstop_state){
         case 1: ISR_SO4;
 
 	//default: PRINT(PCINT ERROR)
-}
+  }
 
-endstop_state=ENDSTOPS;
+  endstop_state=ENDSTOPS;
 
-delay(10);
+  delay(10);
 
-//Reenable interrupt
+  //Reenable interrupt
 }
 
 
@@ -148,8 +147,8 @@ ISR_SW5(){//Endstop M3_RIGHT
 }
 
 ISR_SW6(){//Endstop M3_LEFT
-  disableMotor(M3)
-  setDir(M3,LEFT)
+  disableMotor(M3);
+  setDir(M3,LEFT);
 }
 
 ISR_SO3(){//Optical Encoder M1
