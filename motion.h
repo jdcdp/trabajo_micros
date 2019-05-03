@@ -8,6 +8,11 @@
 #include "drivers/motor.h"
 #include <stdint.h>
 
+#define ENC2FLOOR1 100 //encoder steps for floor level
+#define ENC2FLOOR2 200
+#define ENC2FLOOR3 300
+
+
 void homeAll();
 
 void homeZ();
@@ -24,7 +29,7 @@ void stopY();
 
 uint8_t getState();//depende de la integracion
 
-void releaseProduct(uint8_t num);
+void selectProduct(uint8_t num);
 
 #endif
 

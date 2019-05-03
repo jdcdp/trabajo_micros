@@ -10,9 +10,6 @@ endstop_state=ENDSTOPS;//compare variable for pcint change detection
 sei();
 }
 
-
-
-
 void update_pwm(){
   for(i=0;i<4;i++){
     if(motor[i].en){
@@ -53,6 +50,12 @@ void disableMotor(uint8_t motnum){
   update_pwm();
 }
 
+void disableAllMotors(){
+  disableMotor(M1);
+  disableMotor(M2);
+  disableMotor(M3);
+  disableMotor(M4);
+}
 void enableMotor(uint8_t motnum){
   motor[motnum].en=1;
   update_pwm();
@@ -62,8 +65,8 @@ void setDir(uint8_t motnum, uint8_t direction){
   if(direction){
     motor[motnum].dir=1;
   }
-  else {
-     motor[motnum].dir=0;
+  else{
+    motor[motnum].dir=0;
   }
   update_pwm();
 }
@@ -75,7 +78,6 @@ void setWantedPos(uint16_t wpos, uint8_t motnum){
 uint16_t getPos(uint8_t motnum){
   return motor[motnum].pos;
 }
-
 
 
 ISR(ENDSTOP_INTERRUPT){
@@ -198,9 +200,11 @@ ISR_SW7(){//Position detector M3             //NO TERMINADA
     motor[M3].pos--;
   }
 }
-*/
-/*
-ISR(SW10) Level Sensors , I don't need them
-ISR(SW11)
-ISR(SW8) Quarter step M4, I don't need it. Maybe add if there are enough pins
-*/
+
+ISR_SW8(){ //TO DO: M4 step counter
+
+}
+
+
+//ISR(SW10) Not needed, level sensors
+//ISR(SW11)

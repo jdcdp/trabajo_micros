@@ -18,8 +18,7 @@
 #define MAXSPEED 0xFFFF
 
 #define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
-#define SLOW_CONTACT 20 /*Slow speed (up to 255) for M3 alignment*/
-
+#define SLOW_CONTACT 0x0FFF /*Slow speed for M3 alignment*/
 
 /* Not used yet
 #define INVMOTORM1 0
@@ -51,6 +50,8 @@ uint16_t endstop_state=0;
 void motorSetup();
 
 void disableMotor(uint8_t motnum);
+
+void disableAllMotors();
 
 void enableMotor(uint8_t motnum);
 
