@@ -5,6 +5,26 @@
 #include "motion.h"
 #include "drivers/motor.h"
 
+#ifdef _LIB_CALL_
+
+void libcall_motorsync(){
+	int16_t delta=motor[M1].getPos-motor[M2].getpos;
+	if (delta>MAXDELTA){
+		setSpeed(M1,motor[M2].spd*MAXDELTA/abs(delta)); //Check how it behaves
+	}
+	else if (delta<-MAXDELTA){
+		setSpeed(M2,motor[M1].spd*MAXDELTA/abs(delta));
+	}
+	else {
+		setSpeed(M1,max(motor[M1].spd,motor[M2].spd));
+	      	setSpeed(M2,max(motor[M1].spd,motor[M2].spd));
+	}
+}
+
+#endif
+
+
+
 void motion_init(){
 //set interrupts:
 //-level sensor

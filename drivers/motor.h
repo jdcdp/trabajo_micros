@@ -6,20 +6,21 @@
 #include <stdint.h>
 #include "../pinout.h"
 
-#define M1 0
-#define M2 1
-#define M3 2
-#define M4 3
-#define UP 1
-#define DOWN 0
-#define RIGHT 0
-#define LEFT 1
+#define M1 	0
+#define M2 	1
+#define M3 	2
+#define M4 	3
+#define UP 	1
+#define DOWN 	0
+#define RIGHT	0
+#define LEFT 	1
 
-#define MAXSPEED 0xFFFF
+#define MAXSPEED 	0xFFFF //(0 to FFFF)
 
-#define TOUCH_DELAY 300 /*Delay in ms to move around M3's trigger point*/
-#define SLOW_CONTACT 0x0FFF /*Slow speed for M3 alignment*/
+#define TOUCH_DELAY 	300 /*Delay in ms to move around M3's trigger point*/
+#define SLOW_CONTACT 	0x0FFF /*Slow speed for M3 alignment*/
 
+#define YTURNCOUNT	4 //number of steps to signal supposed product release
 /* Not used yet
 #define INVMOTORM1 0
 #define INVMOTORM2 0

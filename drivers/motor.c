@@ -21,7 +21,6 @@ void update_pwm(){
       }
       pwm(i,motor[i].spd);//deberia funcionar
       //PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
-      //More to do...?
     }
     else{
       pwm(i,0);
@@ -81,31 +80,32 @@ uint16_t getPos(uint8_t motnum){
 }
 
 
-ISR(ENDSTOP_INTERRUPT){
+ISR(ENDSTOP_INTERRUPT){//                            TO DO
 
 //Set interrupt mask to disable bounces
 
-  switch(ENDSTOPS ^ endstop_state){
+  /*read all pin changes but rise on 6 and 7*/
+  switch(ENDSTOPS ^ endstop_state ^ (endstop_state & (1<<6 | 1<<7))) {
 
-	case 1: ISR_SW1;
+	case 1<<0: ISR_SW1;
 
-        case 2: ISR_SW2;
+        case 1<<1: ISR_SW2;
 
-        case 3: ISR_SW3;
+        case 1<<2: ISR_SW3;
 
-        case 1: ISR_SW4;
+        case 1<<3: ISR_SW4;
 
-        case 1: ISR_SW5;
+        case 1<<4: ISR_SW5;
 
-        case 1: ISR_SW6;
+        case 1<<5: ISR_SW6;
 
-        case 1: ISR_SW7;
+        case 1<<6: ISR_SW7;//!
 
-        case 1: ISR_SW8;
+        case 1<<7: ISR_SW8;//!
 
-        case 1: ISR_SO3;
+        case 1<<8: ISR_SO3;
 
-        case 1: ISR_SO4;
+        case 1<<9: ISR_SO4;
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -118,50 +118,52 @@ ISR(ENDSTOP_INTERRUPT){
 }
 
 
-ISR_SW1(){ //Endstop M1_HIGH
+void ISR_SW1(){ //Endstop M1_HIGH
   disableMotor(M1);
   setDir(M1,DOWN);
 }
 
-ISR_SW2(){//Endstop M1_LOW
+void ISR_SW2(){//Endstop M1_LOW
   disableMotor(M1);
   setDir(M1,UP);
   setPos(M1,0);
 }
 
-ISR_SW3(){//Endstop M2_HIGH
+void ISR_SW3(){//Endstop M2_HIGH
   disableMotor(M2);
   setDir(M2,DOWN);
 }
 
-ISR_SW4(){//Endstop M2_LOW
+void ISR_SW4(){//Endstop M2_LOW
   disableMotor(M2);
   setDir(M2,UP);
   setPos(M2,0);
 }
 
-ISR_SW5(){//Endstop M3_RIGHT
+void ISR_SW5(){//Endstop M3_RIGHT
   disableMotor(M3);
   setDir(M3,LEFT);
   setPos(M3,0);
 }
 
-ISR_SW6(){//Endstop M3_LEFT
+void ISR_SW6(){//Endstop M3_LEFT
   disableMotor(M3);
   setDir(M3,LEFT);
 }
 
-ISR_SO3(){//Optical Encoder M1
+void ISR_SO3(){//Optical Encoder M1
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }
   else{
     motor[M1].pos--;
   }
-  update_pwm();
+#ifdef _LIB_CALL_
+  libcall_motorsync();
+#endif
 }
 
-ISR_SO4(){//Optical Encoder M2
+void ISR_SO4(){//Optical Encoder M2
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
@@ -171,16 +173,7 @@ ISR_SO4(){//Optical Encoder M2
   update_pwm();
 }
 
-ISR_SW7(){//Position detector M3             //NO TERMINADA
-
-  if((motor[M3].pos==motor[M3].fpos) && (motor[M3].dir==LEFT)){
-    //if slow...
-    delay(TOUCH_DELAY);
-    setSpeed(M3,SLOW_CONTACT);
-    setDir(M3,RIGHT);
-
-  }
-
+ISR_SW7(){//Position detector M3
   if(motor[M3].dir==LEFT){
     motor[M3].pos++;
     if(motor[M3].pos==motor[M3].fpos) {
@@ -197,11 +190,27 @@ ISR_SW7(){//Position detector M3             //NO TERMINADA
   }
   else{
     motor[M3].pos--;
+    if(motor[M3].pos==motor[M3].fpos-1) {
+       if(motor[M3].speed==SLOW_CONTACT) {
+                disableMotor(M3);
+        }
+        else {
+                delay(TOUCH_DELAY);
+                setSpeed(M3,SLOW_CONTACT);
+                setDir(M3,LEFT);
+        }
+    }
   }
 }
 
-ISR_SW8(){ //TO DO: M4 step counter
-
+ISR_SW8(){ //M4 step counter
+  motor[M4].pos++;
+  if (motor[M4].pos==YTURNCOUNT){
+  	motor[M4].pos=0;
+#ifdef _SYS_CALL_
+	syscall_product_out();    //for detecting missing products
+#endif
+  }
 }
 
 
