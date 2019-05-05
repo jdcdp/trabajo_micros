@@ -6,8 +6,10 @@
 
 &nbsp;
 
-&nbsp;
-Por Rellenar
+-   *max(a,b)*: devuelve el máximo
+
+-   *min(a,b)*: devuelve el mínimo
+
 &nbsp;
 
 &nbsp;
@@ -73,3 +75,7 @@ Por Rellenar
 
 - SW7 : Detector de posicion M3
 
+&nbsp;
+**Llamadas externas:**
+
+-   *syscall_product_out:* notifica al sistema que se ha agotado el producto que se ha pedido
