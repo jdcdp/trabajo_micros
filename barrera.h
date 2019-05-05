@@ -10,9 +10,6 @@
 #define Bk_OFF()	        clrBit(PORTB,2)           //Activación de la señal M5_bk, frenado dinámico OFF
 
 
-//Microinterruptor SW9
-#define SW9PIN	(PINB & 0x02)
-#define SW9PORT	(PORTB & 0x02)
 
 void abrir_puerta();
 
