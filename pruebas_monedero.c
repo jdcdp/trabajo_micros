@@ -78,6 +78,9 @@ ISR(S01TIMERn_CAPT_vect){
 		relacion=(float)ta/tb;
 		ultima_moneda= calculate_ultima_moneda(relacion);
 		add_saldo(ultima_moneda);
+		if(ok)
+		abrir_barrera();
+		syscall_saldo_ok();
 
 		//Parar timers y ...
 		S01TCCRnB=0x40; //Hacer que capture con flanco de subida de S01 (Bit6=1)
