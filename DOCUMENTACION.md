@@ -18,21 +18,22 @@
 
 **Funciones:**
 
+-   *setup_coin :* Inicialización de la libreria
+
 -   *get_saldo:* calcula el saldo
 
 -   *get_ultima_moneda :* coge el valor de la última moneda introducida
 
--   *calculate_ultima_moneda :* calcula el valor de la moneda introducida
-
--   *add_saldo :* añade el valor de la ultima moneda al saldo total
-
--   *setup_coin :* setup.
 
 &nbsp;
 
 **Interrupciones:**
 
 -   *Sensores Ópticos 1 y 2 (SO1,SO2):* 
+
+**Llamadas externas:**
+
+-   *syscall_leer_saldo();*: Avisa al sistema del estado del saldo
 
 
 ## Control del movimiento(motion.h):
@@ -79,3 +80,5 @@
 **Llamadas externas:**
 
 -   *syscall_product_out():* notifica al sistema que se ha agotado el producto que se ha pedido
+
+-   *syscall_aligned():* notifica al sistema de que los motores están en posición.
