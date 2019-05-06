@@ -44,5 +44,7 @@
 #define ENDSTOPS	PINB
 #define ENSTOP_INTERRUPT PCINT0_vect
 
+//barrera.h
+#define M5_BK  
 
 #endif
