@@ -78,4 +78,4 @@
 &nbsp;
 **Llamadas externas:**
 
--   *syscall_product_out:* notifica al sistema que se ha agotado el producto que se ha pedido
+-   *syscall_product_out():* notifica al sistema que se ha agotado el producto que se ha pedido
