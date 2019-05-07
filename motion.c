@@ -5,12 +5,11 @@
 #include "motion.h"
 #include "drivers/motor.h"
 
-#define _LIB_CALL_
 #ifdef  _LIB_CALL_
 
 void libcall_motorsync(){
 	int16_t delta;
-	delta=(motor[M1].getPos-motor[M2].getpos);
+	delta=(getPos(M1)-getPos(M2));
 	if (delta>MAXDELTA){
 		setSpeed(M1,motor[M2].spd*MAXDELTA/abs(delta)); //Check how it behaves
 	}

@@ -4,6 +4,7 @@
 #define _MOTOR_H_
 
 #include <stdint.h>
+#include <avr/interrupt.h>
 #include "../macros.h"
 #include "../pinout.h"
 #include "pwm.h"

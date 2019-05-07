@@ -1,4 +1,4 @@
-#include <avr/io.h>
+/*#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 
@@ -104,3 +104,4 @@ void setup_coin(){
 	setBit(S02_TCCRnB,7); //Antiruido
 	sei();
 }
+*/

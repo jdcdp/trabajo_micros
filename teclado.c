@@ -1,3 +1,4 @@
+/*
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
@@ -101,7 +102,7 @@ ISR(PCINT2_vect)
 			PORTK >>= 1;
 		}
 		PORTK = 0b11110000;
-/*		debounceMs(2000000);*/
+//		debounceMs(2000000);
 		ENABLE = 0;
 	}
 }
@@ -120,16 +121,4 @@ void setup()
 // 	TIMSK1 = 0b0000000;
 
 
-}
-
-
-int main(void)
-{
-	cli();
-	setup();
-	sei();
-	while (1)
-	{
-	
-	}
-}
+}*/

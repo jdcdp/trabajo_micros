@@ -44,6 +44,7 @@
 //drivers/motor.h
 #define ENDSTOPS	        PINK
 #define ENDSTOPDDR	      	DDRK
+#define OPTENDDDR			DDRD
 #define ENSTOP_INTERRUPT  	PCINT1_vect
 #define MOTOR_DIR_PORT	  	PORTK
 #define M1_DIR		        3

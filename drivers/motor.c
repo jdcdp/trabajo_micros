@@ -6,7 +6,7 @@
 void motorSetup(){
   cli();
   ENDSTOPDDR=0;
-  OPTENDDDR&=~(1|1<<1);
+  OPTENDDDR&=~(1<<0|1<<1);
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
   init_pwm();
   init_time();

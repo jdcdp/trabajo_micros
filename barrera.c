@@ -1,4 +1,4 @@
-#include <avr/io.h>
+/*#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 
@@ -38,3 +38,4 @@ void cerrar_puerta(){
 
 //Conviene manejar el motor m5 con la señal de frenado dinamico, para parar la barrera en su lugar exacto
 
+*/
