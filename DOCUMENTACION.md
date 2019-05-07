@@ -29,7 +29,7 @@
 
 **Interrupciones:**
 
--   *Sensores Ópticos 1 y 2 (SO1,SO2):* 
+-   *Sensores Ópticos 1 y 2 (SO1,SO2):*
 
 **Llamadas externas:**
 
@@ -68,13 +68,13 @@
 &nbsp;
 **Interrupciones:**
 
-- SW1 to SW6 : Endstops M1_HIGH/LOW hasta M3_HIGH/LOW
+- SW1 to SW6 : Endstops M1_HIGH/LOW hasta M3_HIGH/LOW (Puerto K)
 
-- SO3 : Optical Encoder del motor M1 (vertical)
+- SO3 : Optical Encoder del motor M1 (vertical) (INT0)
 
-- SO4 : Optical Encoder del motor M2 (vertical)
+- SO4 : Optical Encoder del motor M2 (vertical) (INT1)
 
-- SW7 : Detector de posicion M3
+- SW7 : Detector de posicion M3 (puerto K)
 
 &nbsp;
 **Llamadas externas:**

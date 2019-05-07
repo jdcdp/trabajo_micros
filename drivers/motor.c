@@ -4,8 +4,9 @@
 
 
 void motorSetup(){
-  cli();//No incluido en avr-gcc, cambiar por SREG?
+  cli();
   ENDSTOPDDR=0;
+  OPTENDDDR&=~(1|1<<1);
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
   init_pwm();
   init_time();
@@ -20,10 +21,8 @@ void update_pwm(){
 	case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[i].dir);
         case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[i].dir);
         case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[i].dir);
-        case M4: bitchange(MOTOR_DIR_PORT,M4_DIR,motor[i].dir);
       }
-      pwm(i,motor[i].spd);//deberia funcionar
-      //PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
+      pwm(i,motor[i].spd);
     }
     else{
       pwm(i,0);
@@ -87,6 +86,21 @@ uint16_t getPos(uint8_t motnum){
   return motor[motnum].pos;
 }
 
+void motorZroutine(){
+ int16_t d1,d2;
+ d1=abs(motor[M1].fpos-motor[M1].pos);
+ d2=abs(motor[M2].fpos-motor[M2].pos);
+ if(min(d1,d2)<ZALIGNSTOP){
+ disableMotor(M1);
+ disableMotor(M2);
+ enableMotor(M3);
+ }
+ else if (min(d1,d2)<ZALIGNSLOW){
+ setSpeed(M1,ZALIGNSPEED);
+ setSpeed(M2,ZALIGNSPEED);
+ }
+}
+
 
 ISR(ENDSTOP_INTERRUPT){
 
@@ -110,10 +124,6 @@ ISR(ENDSTOP_INTERRUPT){
         case 1<<6: ISR_SW7;//!
 
         case 1<<7: ISR_SW8;//!
-
-        case 1<<8: ISR_SO3;
-
-        case 1<<9: ISR_SO4;
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -159,28 +169,6 @@ void ISR_SW6(){//Endstop M3_LEFT
   setDir(M3,LEFT);
 }
 
-void ISR_SO3(){//Optical Encoder M1
-  if(motor[M1].dir==UP){
-    motor[M1].pos++;
-  }
-  else{
-    motor[M1].pos--;
-  }
-#ifdef _LIB_CALL_
-  libcall_motorsync();
-#endif
-}
-
-void ISR_SO4(){//Optical Encoder M2
-  if(motor[M2].dir==UP){
-    motor[M2].pos++;
-  }
-  else{
-    motor[M2].pos--;
-  }
-  update_pwm();
-}
-
 void ISR_SW7(){//Position detector M3
   if(motor[M3].dir==LEFT){
     motor[M3].pos++;
@@ -219,6 +207,35 @@ void ISR_SW8(){ //M4 step counter
 #endif
   }
 }
+
+ISR(S03){//Optical Encoder M1
+  if(motor[M1].dir==UP){
+    motor[M1].pos++;
+  }
+  else{
+    motor[M1].pos--;
+  }
+#ifdef _LIB_CALL_
+  motorZroutine();
+  libcall_motorsync();
+#endif
+}
+
+ISR(SO4){//Optical Encoder M2
+  if(motor[M2].dir==UP){
+    motor[M2].pos++;
+  }
+  else{
+    motor[M2].pos--;
+  }
+  motorZroutine();
+#ifdef _LIB_CALL_
+  motorZroutine();
+  libcall_motorsync();
+#endif
+
+}
+
 
 
 //ISR(SW10) Not needed, level sensors

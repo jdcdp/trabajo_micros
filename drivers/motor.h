@@ -21,20 +21,13 @@
 #define MAXSPEED 	0xFFFF //(0 to FFFF)
 
 #define TOUCH_DELAY 	300 /*Delay in ms to move around M3's trigger point*/
-#define SLOW_CONTACT 	0x0FFF /*Slow speed for M3 alignment*/
+#define SLOW_CONTACT 	0x2FFF /*Slow speed for M3 alignment*/
 
 #define YTURNCOUNT	4 //number of steps to signal supposed product release
-/* Not used yet
-#define INVMOTORM1 0
-#define INVMOTORM2 0
-#define INVMOTORM3 0
-#define INVMOTORM4 0
 
-#define BRAKEFEATUREM1 0
-#define BRAKEFEATUREM2 0
-#define BRAKEFEATUREM3 0
-#define BRAKEFEATUREM4 0
-*/
+#define ZALIGNSLOW	5 //Z step offset to slow movement
+#define ZALIGNSPEED	0xAFFF //Speed when slowing
+#define ZALIGNSTOP	2 //Z step offset to stop movement
 
 //Variables and types
 
@@ -46,7 +39,7 @@ struct motor {
   uint16_t fpos;
 } motor[4];
 
-uint16_t endstop_state;
+uint8_t endstop_state;
 
 
 //Functions
@@ -86,9 +79,5 @@ void ISR_SW6();
 void ISR_SW7();
 
 void ISR_SW8();
-
-void ISR_SO3();
-
-void ISR_SO4();
 
 #endif

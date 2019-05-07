@@ -5,7 +5,8 @@
 #include "motion.h"
 #include "drivers/motor.h"
 
-#ifdef _LIB_CALL_
+#define _LIB_CALL_
+#ifdef  _LIB_CALL_
 
 void libcall_motorsync(){
 	int16_t delta;
@@ -41,15 +42,15 @@ void homeAll(){
 
 void homeX(){
   setDir(M3,RIGHT);
-  setSpeed(M3, 0.5*MAXSPEED);
+  setSpeed(M3, MAXSPEED);
   enableMotor(M3);
 }
 
 void homeZ(){
   setDir(M1, UP);
-  setSpeed(M1, 0.5*MAXSPEED);
+  setSpeed(M1, MAXSPEED);
   setDir(M2, UP);
-  setSpeed(M2, 0.5*MAXSPEED);
+  setSpeed(M2, MAXSPEED);
   enableMotor(M1);
   enableMotor(M2);
 }
@@ -68,7 +69,7 @@ void moveX(uint8_t position){
   setDir(M3,(getPos(M3)<position));
   if(getPos(M3)!=position){
     enableMotor(M3);
-    setSpeed(M3,0.5*MAXSPEED);
+    setSpeed(M3,MAXSPEED);
   }
   /*else{ //check sensor before moving
     enableMotor(M3);
@@ -102,15 +103,15 @@ void selectProduct(uint8_t num){
   disableAllMotors();
   homeX();
   switch(num){
-    case 1: moveZ(ENC2FLOOR3);	moveX(3); //Delay beetween movements?
-    case 2: moveZ(ENC2FLOOR3);  moveX(2);
-    case 3: moveZ(ENC2FLOOR3);  moveX(1);
-    case 4: moveZ(ENC2FLOOR2);  moveX(3);
-    case 5: moveZ(ENC2FLOOR2);  moveX(2);
-    case 6: moveZ(ENC2FLOOR2);  moveX(1);
-    case 7: moveZ(ENC2FLOOR1);  moveX(3);
-    case 8: moveZ(ENC2FLOOR1);  moveX(2);
-    case 9: moveZ(ENC2FLOOR1);  moveX(1);
+    case 1: moveZ(ENC2FLOOR3);	setWantedPos(M3,3);
+    case 2: moveZ(ENC2FLOOR3);  setWantedPos(M3,2);
+    case 3: moveZ(ENC2FLOOR3);  setWantedPos(M3,1);
+    case 4: moveZ(ENC2FLOOR2);  setWantedPos(M3,3);
+    case 5: moveZ(ENC2FLOOR2);  setWantedPos(M3,2);
+    case 6: moveZ(ENC2FLOOR2);  setWantedPos(M3,1);
+    case 7: moveZ(ENC2FLOOR1);  setWantedPos(M3,3);
+    case 8: moveZ(ENC2FLOOR1);  setWantedPos(M3,2);
+    case 9: moveZ(ENC2FLOOR1);  setWantedPos(M3,1);
   }
 }
 

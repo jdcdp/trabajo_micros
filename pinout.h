@@ -49,7 +49,8 @@
 #define M1_DIR		        3
 #define M2_DIR            	4
 #define M3_DIR            	5
-
+#define SO3			INT0_vect
+#define S04			INT1_vect
 
 
 
