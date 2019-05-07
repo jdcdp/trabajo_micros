@@ -4,7 +4,6 @@
 
 //Sensor Optico 1
 #define S01_PIN		(PINL & 0x01)
-#define S01_PORT	(PORTL & 0x01)
 
 //Timer con Input Capture
 #define S01_TCCRnB	TCCR4B
@@ -17,7 +16,6 @@
 
 //Sensor Optico 2
 #define S02_PIN		(PINL & 0x02)
-#define S02_PORT	(PORTL & 0x02)
 
 //Timer con Input Capture
 #define S02_TCCRnB	TCCR1B
