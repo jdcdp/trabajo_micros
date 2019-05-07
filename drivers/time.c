@@ -11,7 +11,7 @@ void init_time(){
 
         TIME_TCCRA = 0x02; //Modo CTC
 
-        TIME_OCR = TIME_MAX; //Set timer TOP_A
+        TIME_OCRA = TIME_MAX; //Set timer TOP_A
 
         TIME_TCCRB = 0x01; //Preescalado de 0, cuenta cada us (1MHz)
 
