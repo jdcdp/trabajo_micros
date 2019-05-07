@@ -58,32 +58,32 @@ void add_saldo(int ultima_moneda){
 }
 
 //Sensor Optico 1
-ISR(S01TIMERn_CAPT_vect){
+ISR(S01_TIMERn_CAPT_vect){
 
-	if((S01PIN) != 0){ //Flanco Subida
+	if((S01_PIN) != 0){ //Flanco Subida
 
 		//Arrancar Contadores con Preescalado de 8 (Bit1=1) y...
-		S01TCCRnB=0x02; //Hacer que capture con flanco de bajada de S01 (Bit6=0)
-		S02TCCRnB=0x42; //Flanco subida de S02 (Bit6=1)
+		S01_TCCRnB=0x02; //Hacer que capture con flanco de bajada de S01 (Bit6=0)
+		S02_TCCRnB=0x42; //Flanco subida de S02 (Bit6=1)
 	}
 
-	if((S01PIN) == 0){ //Flanco Bajada
+	if((S01_PIN) == 0){ //Flanco Bajada
 
 		//Determinacion tipo de moneda y suma del saldo
-		ta=(uint16_t)S01ICRn;
-		tb=(uint16_t)S02ICRn; //Estoy suponiendo que el SO2 siempre se activa antes que se desactiva el S01
+		ta=(uint16_t)S01_ICRn;
+		tb=(uint16_t)S02_ICRn; //Estoy suponiendo que el SO2 siempre se activa antes que se desactiva el S01
 
 		relacion=(float)ta/tb;
 		ultima_moneda= calculate_ultima_moneda(relacion);
 		add_saldo(ultima_moneda);
 
 		//Parar timers y ...
-		S01TCCRnB=0x40; //Hacer que capture con flanco de subida de S01 (Bit6=1)
-		S02TCCRnB=0x40; //Hacer que capture por flanco de subida de S02 (Bit6=1)
+		S01_TCCRnB=0x40; //Hacer que capture con flanco de subida de S01 (Bit6=1)
+		S02_TCCRnB=0x40; //Hacer que capture por flanco de subida de S02 (Bit6=1)
 
 		//Resetear Timers
-		S01TCNTn=0x00;
-		S02TCNTn=0x00;
+		S01_TCNTn=0x00;
+		S02_TCNTn=0x00;
 	}
 }
 
@@ -94,14 +94,13 @@ void setup_coin(){
 	//Timers para Input Capture
 	cli();
 
-	S01TIMSKn=0x20; //Activar rutina interrupcion por input capture
-	S02TIMSKn=0x00; //No necesita rutina de interrupcion
+	S01_TIMSKn=0x20; //Activar rutina interrupcion por input capture
+	S02_TIMSKn=0x00; //No necesita rutina de interrupcion
 
-	S01TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S01 (Bit6=1)
-	setBit(S01TCCRnB,7); //Antirrebotes
+	S01_TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S01 (Bit6=1)
+	setBit(S01_TCCRnB,7); //Antiruido
 
-	S02TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S02 (Bit6=1)
-	setBit(S02TCCRnB,7); //Antirrebotes
-
+	S02_TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S02 (Bit6=1)
+	setBit(S02_TCCRnB,7); //Antiruido
 	sei();
 }
