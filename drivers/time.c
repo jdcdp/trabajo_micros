@@ -2,10 +2,12 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
-#include "time_m.h"
+#include "time.h"
 
-void setup_time(){
+void init_time(){
         cli();
+
+	current_time=0;
 
         TIME_TCCRA = 0x02; //Modo CTC
 
@@ -18,21 +20,20 @@ void setup_time(){
         sei();
 }
 
-uint64_t micros(){
-	return micros_total;
+uint64_t timenow(){
+	return current_time;
 }
 
-void delay(uint8_t ms){
+void delay(uint16_t ms){
 
 	sei();
-	int end_time=micros()+ms*10;
-	while (micros()<end_time);//maybe change to an interruption and use HOLD()
-
+	uint16_t end_time=timenow()+ms*10;
+	while (timenow()<end_time);//Use a timer instead
 }
 
 
 ISR(TIMER0_COMPA_vect){
-	++micros_total;
+	current_time++;
 }
 
 

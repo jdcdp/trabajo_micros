@@ -11,4 +11,6 @@
        __typeof__ (b) _b = (b); \
      _a < _b ? _a : _b; })
 
+ #define bitchange(port,pin,val) (port=(port&(0xFF ^ 1<<pin))|val<<pin)
+
 #endif

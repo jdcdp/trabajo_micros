@@ -4,20 +4,23 @@
 
 
 void motorSetup(){
-  cli();
+  cli();//No incluido en avr-gcc, cambiar por SREG?
   ENDSTOPDDR=0;
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
+  init_pwm();
+  init_time();
   sei();
 }
 
 void update_pwm(){
-  for(int i=0;i<4;i++){
+  int i;
+  for(i=0;i<4;i++){
     if(motor[i].en){
       switch(i){
-	case M1: M1DIR=motor[i].dir;
-	case M2: M2DIR=motor[i].dir;
-	case M3: M3DIR=motor[i].dir;
-	case M4: M4DIR=motor[i].dir;
+	case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[i].dir);
+        case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[i].dir);
+        case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[i].dir);
+        case M4: bitchange(MOTOR_DIR_PORT,M4_DIR,motor[i].dir);
       }
       pwm(i,motor[i].spd);//deberia funcionar
       //PORTB|=0b1000000>>i; //BYPASS TEMPORAL AL PWM
@@ -42,6 +45,7 @@ uint8_t setSpeed(uint8_t motnum,uint16_t spd){
   else {
     //PRINT ERROR: MOTOR DISABLED
     return 1;
+  }
 }
 
 void disableMotor(uint8_t motnum){
@@ -71,6 +75,10 @@ void setDir(uint8_t motnum, uint8_t direction){
   update_pwm();
 }
 
+void setPos(uint16_t wpos, uint8_t motnum){
+  motor[motnum].pos=wpos;
+}
+
 void setWantedPos(uint16_t wpos, uint8_t motnum){
   motor[motnum].fpos=wpos;
 }
@@ -80,9 +88,9 @@ uint16_t getPos(uint8_t motnum){
 }
 
 
-ISR(ENDSTOP_INTERRUPT){//                            TO DO
+ISR(ENDSTOP_INTERRUPT){
 
-//Set interrupt mask to disable bounces
+//TO DO:Set interrupt mask to disable bounces
 
   /*read all pin changes but rise on 6 and 7*/
   switch(ENDSTOPS ^ endstop_state ^ (endstop_state & (1<<6 | 1<<7))) {
@@ -173,11 +181,11 @@ void ISR_SO4(){//Optical Encoder M2
   update_pwm();
 }
 
-ISR_SW7(){//Position detector M3
+void ISR_SW7(){//Position detector M3
   if(motor[M3].dir==LEFT){
     motor[M3].pos++;
     if(motor[M3].pos==motor[M3].fpos) {
-    	if(motor[M3].speed==SLOW_CONTACT) {
+    	if(motor[M3].spd==SLOW_CONTACT) {
 		disableMotor(M3);
 	}
 	else {
@@ -185,13 +193,12 @@ ISR_SW7(){//Position detector M3
     		setSpeed(M3,SLOW_CONTACT);
     		setDir(M3,RIGHT);
 	}
-
-
+    }
   }
   else{
     motor[M3].pos--;
     if(motor[M3].pos==motor[M3].fpos-1) {
-       if(motor[M3].speed==SLOW_CONTACT) {
+       if(motor[M3].spd==SLOW_CONTACT) {
                 disableMotor(M3);
         }
         else {
@@ -203,7 +210,7 @@ ISR_SW7(){//Position detector M3
   }
 }
 
-ISR_SW8(){ //M4 step counter
+void ISR_SW8(){ //M4 step counter
   motor[M4].pos++;
   if (motor[M4].pos==YTURNCOUNT){
   	motor[M4].pos=0;

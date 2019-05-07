@@ -40,12 +40,23 @@
 #define PWM_OCR_M3  	OCR1A
 #define PWM_TOP     	ICR1
 #define PWM_DDR		DDRB
+
 //drivers/motor.h
 #define ENDSTOPS	PINB
+#define ENDSTOPDDR	DDRL  	//cambiar estos valores
 #define ENSTOP_INTERRUPT PCINT0_vect
+#define MOTOR_DIR_PORT	PORTK
+#define M1_DIR		1
+#define M2_DIR          2
+#define M3_DIR          3
+#define M4_DIR          4	//Cambiar
+
+
+
 
 //barrera.h
-#define M5_BK  
-#define SW9 
+#define M5_BK
+#define SW9
+
 
 #endif

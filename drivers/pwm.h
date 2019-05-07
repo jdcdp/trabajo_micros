@@ -2,8 +2,11 @@
 //PWM code
 #ifndef _PWM_H_
 #define _PWM_H_
-#include "pwm.c"
+
+#include <stdint.h>
+#include <avr/io.h>
 #include "../pinout.h"
+#include "motor.h"
 
 #define PWM_MAX      0xFFFF
 

@@ -4,7 +4,10 @@
 #define _MOTOR_H_
 
 #include <stdint.h>
+#include "../macros.h"
 #include "../pinout.h"
+#include "pwm.h"
+#include "time.h"
 
 #define M1 	0
 #define M2 	1
@@ -35,15 +38,15 @@
 
 //Variables and types
 
-typedef struct motor {
-uint8_t dir;
-uint16_t spd;
-uint8_t en;
-uint16_t pos;
-uint16_t fpos;
+struct motor {
+  uint8_t dir;
+  uint16_t spd;
+  uint8_t en;
+  uint16_t pos;
+  uint16_t fpos;
 } motor[4];
 
-uint16_t endstop_state=0;
+uint16_t endstop_state;
 
 
 //Functions
@@ -59,6 +62,8 @@ void enableMotor(uint8_t motnum);
 uint8_t setSpeed(uint8_t motnum,uint16_t spd);
 
 void setDir(uint8_t motnum,uint8_t direction);
+
+void setPos(uint16_t wpos, uint8_t motnum);
 
 void setWantedPos(uint16_t wpos, uint8_t motnum);
 

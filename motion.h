@@ -13,7 +13,7 @@
 #define ENC2FLOOR2 200
 #define ENC2FLOOR3 300
 
-#define _LIB_CALL_
+//#define _LIB_CALL_
 #ifdef 	_LIB_CALL_
 
 #define MAXDELTA 5 //Minimum offset to start correction

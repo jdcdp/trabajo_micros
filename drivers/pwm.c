@@ -30,7 +30,6 @@ void pwm(uint8_t motnum, uint8_t speed){
                 case M1 : PWM_OCR_M1=speed;
                 case M2 : PWM_OCR_M2=speed;
                 case M3 : PWM_OCR_M3=speed;
-                case M4 : PWM_OCR_M4=speed;
 	}
 }
 
