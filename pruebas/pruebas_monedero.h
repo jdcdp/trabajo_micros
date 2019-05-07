@@ -1,4 +1,4 @@
-#define C10MIN 1.17
+#define C10MIN 1.16
 #define C10MAX 1.20
 
 #define C20MIN 1.33
@@ -12,5 +12,3 @@
 
 #define setBit(P, B) (P |= (1 << B))
 #define resetBit(P,B) (P &= (~ (1 << B) ))
-
-	
