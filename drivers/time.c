@@ -15,7 +15,7 @@ void init_time(){
 
         TIME_TCCRB = 0x01; //Preescalado de 0, cuenta cada us (1MHz)
 
-        TIMSK0 |= (1 << OCIE0A); //Enable Interrupt from CTC_A
+        TIME_TIMSK |= (1 << OCIE0A); //Enable Interrupt from CTC_A
 
         sei();
 }
