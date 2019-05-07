@@ -42,14 +42,13 @@
 #define PWM_DDR		DDRB
 
 //drivers/motor.h
-#define ENDSTOPS	PINB
-#define ENDSTOPDDR	DDRL  	//cambiar estos valores
-#define ENSTOP_INTERRUPT PCINT0_vect
-#define MOTOR_DIR_PORT	PORTK
-#define M1_DIR		1
-#define M2_DIR          2
-#define M3_DIR          3
-#define M4_DIR          4	//Cambiar
+#define ENDSTOPS	        PINK
+#define ENDSTOPDDR	      DDRK  	
+#define ENSTOP_INTERRUPT  PCINT1_vect
+#define MOTOR_DIR_PORT	  PORTK
+#define M1_DIR		        2
+#define M2_DIR            6
+#define M3_DIR            7
 
 
 
