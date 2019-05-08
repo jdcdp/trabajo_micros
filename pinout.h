@@ -52,6 +52,8 @@
 #define SO3					INT0_vect
 #define SO4					INT1_vect
 
+//teclado.h
+#define KEYPAD (PCINT0_vect)
 
 
 //barrera.h
