@@ -1,4 +1,4 @@
-/*#include <avr/io.h>
+#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 
@@ -42,18 +42,22 @@ int calculate_ultima_moneda(float relacion){
 }
 
 void add_saldo(int ultima_moneda){
+	
+	if(ultima_moneda!=0){
 
-	if(ultima_moneda==1){
-		saldo+=0.10;
-	}
-	else if((ultima_moneda==2){
-		saldo+=0.20;
-	}
-	else if((ultima_moneda==3){
-		saldo+=0.50;
-	}
-	else if(ultima_moneda==4){
-		saldo+=1;
+		if(ultima_moneda==1){
+			saldo+=0.10;
+		}
+		else if(ultima_moneda==2){
+			saldo+=0.20;
+		}
+		else if(ultima_moneda==3){
+			saldo+=0.50;
+		}
+		else if(ultima_moneda==4){
+			saldo+=1;
+		}
+
 	}
 }
 
