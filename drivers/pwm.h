@@ -10,7 +10,7 @@
 
 #define PWM_MAX      0xFFFF
 
-void init_pwm();
+void pwm_init();
 
 void pwm(uint8_t motnum, uint8_t speed);
 

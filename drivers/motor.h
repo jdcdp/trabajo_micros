@@ -45,7 +45,7 @@ uint8_t endstop_state;
 
 //Functions
 
-void motorSetup();
+void motor_init();
 
 void disableMotor(uint8_t motnum);
 
@@ -57,9 +57,9 @@ uint8_t setSpeed(uint8_t motnum,uint16_t spd);
 
 void setDir(uint8_t motnum,uint8_t direction);
 
-void setPos(uint16_t wpos, uint8_t motnum);
+void setPos(uint8_t motnum, uint16_t wpos);
 
-void setWantedPos(uint16_t wpos, uint8_t motnum);
+void setWantedPos(uint8_t motnum, uint16_t wpos);
 
 uint16_t getPos(uint8_t motnum);
 

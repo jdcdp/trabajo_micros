@@ -27,10 +27,7 @@ void libcall_motorsync(){
 
 
 void motion_init(){
-//set interrupts:
-//-level sensor
-//-optical endstops
-motorSetup();
+motor_init();
 homeAll();
 }
 
@@ -41,6 +38,7 @@ void homeAll(){
 
 void homeX(){
   setDir(M3,RIGHT);
+  setWantedPos(M3,0);
   setSpeed(M3, MAXSPEED);
   enableMotor(M3);
 }
@@ -50,7 +48,10 @@ void homeZ(){
   setSpeed(M1, MAXSPEED);
   setDir(M2, UP);
   setSpeed(M2, MAXSPEED);
+  setWantedPos(M1,0);
+  setWantedPos(M2,0);
   enableMotor(M1);
+  
   enableMotor(M2);
 }
 
@@ -63,7 +64,7 @@ void moveZ(uint16_t position){
   enableMotor(M2);
 }
 
-void moveX(uint8_t position){
+void moveX(uint8_t position){ //Comprobar esta funcion
   setWantedPos(M3,position);
   setDir(M3,(getPos(M3)<position));
   if(getPos(M3)!=position){

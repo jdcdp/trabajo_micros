@@ -16,7 +16,7 @@
 //Variables y Funciones
 uint64_t current_time;
 
-void init_time();
+void time_init();
 
 uint64_t timenow();
 

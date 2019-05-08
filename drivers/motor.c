@@ -3,13 +3,12 @@
 #include "motor.h"
 
 
-void motorSetup(){
+void motor_init(){
   cli();
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
-  init_pwm();
-  init_time();
+  pwm_init();
   sei();
 }
 
@@ -74,11 +73,11 @@ void setDir(uint8_t motnum, uint8_t direction){
   update_pwm();
 }
 
-void setPos(uint16_t wpos, uint8_t motnum){
+void setPos(uint8_t motnum, uint16_t wpos){
   motor[motnum].pos=wpos;
 }
 
-void setWantedPos(uint16_t wpos, uint8_t motnum){
+void setWantedPos(uint8_t motnum, uint16_t wpos){
   motor[motnum].fpos=wpos;
 }
 
@@ -121,18 +120,16 @@ ISR(ENDSTOP_INTERRUPT){
 
         case 1<<5: ISR_SW6;
 
-        case 1<<6: ISR_SW7;//!
+        case 1<<6: ISR_SW7; delay(10);//!Bounces
 
-        case 1<<7: ISR_SW8;//!
+        case 1<<7: ISR_SW8; delay(10);//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }
 
   endstop_state=ENDSTOPS;
 
-  delay(10);
-
-  //Reenable interrupt
+    //Reenable interrupt
 }
 
 

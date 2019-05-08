@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "time.h"
 
-void init_time(){
+void time_init(){
         cli();
 
 	current_time=0;
