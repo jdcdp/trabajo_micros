@@ -2,14 +2,21 @@
 //Motor control
 #include "motor.h"
 
+int debug;
 
 void motor_init(){
   cli();
-  DDRB=0xFF;
+  DDRB=0xFF;//#@#debug
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
+  DDRD=0;
+  EICRA|=(1<<ISC10|1<<ISC00);
+  EIMSK|=(1<<INT1 | 1<<INT0);
+  PCICR = 0b00000100; //PCINT DEL PUERTO K
+  PCMSK2 = 0b11111111; //Enable PCINT2
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
   pwm_init();
+  debug=1;
   sei();
 }
 
@@ -101,6 +108,7 @@ void motorZroutine(){
  }
 }
 
+#include "avr/interrupt.h"
 
 ISR(ENDSTOP_INTERRUPT){
 
@@ -122,16 +130,15 @@ ISR(ENDSTOP_INTERRUPT){
 
         case 1<<5: ISR_SW6();
 
-        case 1<<6: ISR_SW7(); delay(10);//!Bounces
+        case 1<<6: PCMSK2 &= ~1<<6; ISR_SW7(); delay(10);//!Bounces
 
-        case 1<<7: ISR_SW8(); delay(10);//!Bounces
+        case 1<<7: PCMSK2 &= ~1<<7; ISR_SW8(); delay(10);//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }
 
   endstop_state=ENDSTOPS;
-
-    //Reenable interrupt
+  PCMSK2 = 0b11111111;
 }
 
 
@@ -197,6 +204,7 @@ void ISR_SW7(){//Position detector M3
   }
 }
 
+
 void ISR_SW8(){ //M4 step counter
   motor[M4].pos++;
   if (motor[M4].pos==YTURNCOUNT){
@@ -208,6 +216,7 @@ void ISR_SW8(){ //M4 step counter
 }
 
 ISR(SO3){//Optical Encoder M1
+	  debpos++;
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }

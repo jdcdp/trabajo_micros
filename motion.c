@@ -28,7 +28,7 @@ void libcall_motorsync(){
 
 void motion_init(){
 motor_init();
-homeAll();
+//homeAll();
 }
 
 void homeAll(){

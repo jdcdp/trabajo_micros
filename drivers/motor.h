@@ -43,6 +43,8 @@ struct motor {
 uint8_t endstop_state;
 
 
+uint8_t debpos;
+
 //Functions
 
 void motor_init();
