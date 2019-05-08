@@ -15,7 +15,7 @@
 #define S01_TIMERn_CAPT_vect TIMER4_CAPT_vect
 
 //Sensor Optico 2
-#define S02_PIN		(PINL & 0x02)
+#define S02_PIN		(PIND & 0x10)
 
 //Timer con Input Capture
 #define S02_TCCRnB	TCCR1B
@@ -45,7 +45,7 @@
 #define OPTENDDDR			DDRD
 #define ENSTOP_INTERRUPT  	PCINT1_vect
 #define MOTOR_DIR_PORT	  	PORTK
-#define M1_DIR		        3
+#define M1_DIR              3
 #define M2_DIR            	4
 #define M3_DIR            	5
 #define SO3			INT0_vect
@@ -54,8 +54,8 @@
 
 
 //barrera.h
-#define M5_BK
-#define SW9
+#define M5_BK_PIN (PIND & 0x10)
 
+#define SW9_PIN (PIND & 0x02)
 
 #endif
