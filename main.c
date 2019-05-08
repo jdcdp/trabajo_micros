@@ -17,7 +17,6 @@ time_init();
 
 int main(){
   init();
-  selectProduct(3);
   HOLD();
 return 0;
 }

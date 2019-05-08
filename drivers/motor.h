@@ -14,8 +14,8 @@
 #define M2 	1
 #define M3 	2
 #define M4 	3
-#define UP 	1
-#define DOWN 	0
+#define UP 	0
+#define DOWN 	1
 #define RIGHT	0
 #define LEFT 	1
 

@@ -5,6 +5,7 @@
 
 void motor_init(){
   cli();
+  DDRB=0xFF;
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
@@ -105,24 +106,25 @@ ISR(ENDSTOP_INTERRUPT){
 
 //TO DO:Set interrupt mask to disable bounces
 
+
   /*read all pin changes but rise on 6 and 7*/
   switch(ENDSTOPS ^ endstop_state ^ (endstop_state & (1<<6 | 1<<7))) {
 
-	case 1<<0: ISR_SW1;
+		case 1<<0: ISR_SW1();PORTB=0x01;
 
-        case 1<<1: ISR_SW2;
+        case 1<<1: ISR_SW2();
 
-        case 1<<2: ISR_SW3;
+        case 1<<2: ISR_SW3();
 
-        case 1<<3: ISR_SW4;
+        case 1<<3: ISR_SW4();
 
-        case 1<<4: ISR_SW5;
+        case 1<<4: ISR_SW5();
 
-        case 1<<5: ISR_SW6;
+        case 1<<5: ISR_SW6();
 
-        case 1<<6: ISR_SW7; delay(10);//!Bounces
+        case 1<<6: ISR_SW7(); delay(10);//!Bounces
 
-        case 1<<7: ISR_SW8; delay(10);//!Bounces
+        case 1<<7: ISR_SW8(); delay(10);//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -205,7 +207,7 @@ void ISR_SW8(){ //M4 step counter
   }
 }
 
-ISR(S03){//Optical Encoder M1
+ISR(SO3){//Optical Encoder M1
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }

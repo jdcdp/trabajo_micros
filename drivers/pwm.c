@@ -6,7 +6,7 @@ void pwm_init(){
 
         cli();
 
-		PWM_DDR|= (1<<DDB7) | (1<<DDB6) | (1<<DDB5); //output on all pins
+		PWM_DDR|= (1<<DDB3) | (1<<DDB4) | (1<<DDB5); //output on all pins
 
         PWM_TOP = PWM_MAX;
 
@@ -14,9 +14,9 @@ void pwm_init(){
 
         PWM_TCCRB = (1 << WGM13) | (1 << CS11); //set phase-freq correct PWM with ICR as TOP and prescaler x8
 
-        PWM_OCR_M1 = 0; //set al outputs to 0
+        PWM_OCR_M1 = MAXSPEED; //set al outputs to 0
 
-        PWM_OCR_M2 = 0;
+        PWM_OCR_M2 = MAXSPEED;
 
         PWM_OCR_M3 = 0;
 

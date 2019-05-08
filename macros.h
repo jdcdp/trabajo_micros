@@ -13,7 +13,7 @@
 
  #define bitchange(port,pin,val) (port=(port & ~(1<<pin))|val<<pin)
 
-#ifndef abs()
+#ifndef abs
 #define abs(n)	(n>0?n:-n)
 #endif
 #endif
