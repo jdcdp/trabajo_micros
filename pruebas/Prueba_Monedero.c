@@ -1,13 +1,20 @@
+/*
+ * Prueba_Monedero.c
+ *
+ * Created: 08/05/2019 11:13:50
+ * Author : Guillermo
+ */ 
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-#include "Pruebas_Monedero.h"
+#include "Prueba_Monedero.h"
 
 uint16_t ta,tb;
 float relacion;
 
-uint8_t ultima_moneda;
+int8_t ultima_moneda;
 float saldo;
 
 
@@ -36,13 +43,13 @@ int calculate_ultima_moneda(float relacion){
 		return 4; //1 euro
 	}
 	else {
-		return 0; //No reconocida
+		return -1; //No reconocida
 	}
 }
 
 void add_saldo(int ultima_moneda){
 	
-	if(ultima_moneda!=0){
+	if(ultima_moneda!=-1){
 
 		if(ultima_moneda==1){
 			saldo+=0.10;
@@ -64,10 +71,15 @@ void add_saldo(int ultima_moneda){
 ISR(S01_TIMERn_CAPT_vect){
 
 	if((S01_PIN) != 0){ //Flanco Subida
-
-		//Arrancar Contadores con Preescalado de 8 (Bit1=1) y...
-		S01_TCCRnB=0x02; //Hacer que capture con flanco de bajada de S01 (Bit6=0)
-		S02_TCCRnB=0x42; //Flanco subida de S02 (Bit6=1)
+		
+		//Hacer que capture con flanco de bajada de S01 (Bit6=0)
+		S01_TCCRnB&= (~(1<<ICIE4));
+		
+		//Arrancar Contadores con Preescalado de 8 (Bit1=1)
+		S01_TCCRnB|= 1<<CS41;
+		S02_TCCRnB|= 1<<CS11;
+		
+		
 	}
 
 	if((S01_PIN) == 0){ //Flanco Bajada
@@ -81,8 +93,8 @@ ISR(S01_TIMERn_CAPT_vect){
 		add_saldo(ultima_moneda);
 
 		//Parar timers y ...
-		S01_TCCRnB=0x40; //Hacer que capture con flanco de subida de S01 (Bit6=1)
-		S02_TCCRnB=0x40; //Hacer que capture por flanco de subida de S02 (Bit6=1)
+		S01_TCCRnB|= 1<<ICES4; //Hacer que capture con flanco de subida de S01 (Bit6=1)
+		S02_TCCRnB|= 1<<ICES1;//Hacer que capture por flanco de subida de S02 (Bit6=1)
 
 		//Resetear Timers
 		S01_TCNTn=0x00;
@@ -97,21 +109,22 @@ void setup_coin(){
 	//Timers para Input Capture
 	cli();
 
-	S01_TIMSKn=0x20; //Activar rutina interrupcion por input capture
+	S01_TIMSKn= 1<<ICIE4; //Activar rutina interrupcion por input capture
 	S02_TIMSKn=0x00; //No necesita rutina de interrupcion
 
-	S01_TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S01 (Bit6=1)
-	setBit(S01_TCCRnB,7); //Antiruido
+	S01_TCCRnB= 1<<ICES4; //Hacer que capture sea por flanco de subida de S01 (Bit6=1)
+	S01_TCCRnB|= 1<<ICNC4; //Antiruido
 
-	S02_TCCRnB=0x40; //Hacer que capture sea por flanco de subida de S02 (Bit6=1)
-	setBit(S02_TCCRnB,7); //Antiruido
+	S02_TCCRnB= 1<<ICES1;	//Hacer que capture sea por flanco de subida de S02 (Bit6=1)
+	S02_TCCRnB|= 1<<ICNC1;  //Antiruido
+
 	sei();
 }
 
 int main(void)
 {
 	setup_coin();
-	
+
     /* Replace with your application code */
     while (1) 
     {
