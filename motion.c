@@ -3,6 +3,7 @@
 
 
 #include "motion.h"
+#include "main.h"
 #include "drivers/motor.h"
 
 #ifdef  _LIB_CALL_
