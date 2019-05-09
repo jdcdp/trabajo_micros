@@ -53,8 +53,8 @@ void delayMs(int ms)
 void position(int pos)// De aquí se envía la posición ha Jaime
 {
 	if(already_selected == 0){
-		selectProduct(pos); //Envio posición a Jaime
 		already_selected = 1;
+		selectProduct(pos); //Envio posición a Jaime	
 	} 
 	else{
 			blink_led();
