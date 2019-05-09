@@ -71,6 +71,13 @@ void blink_led() //Función que hace parpadear el led en caso de pulsar el tecla
 	}
 }
 
+void change_led()
+{
+	if (PINB & 0x01)
+ 		PORTB |= (0 << PB0);
+	else PORTB |= (1 << PB0);
+}
+
 ISR(KEYPAD) //Función asociado a las interrupciones del teclado
 {
 	if(enable){
