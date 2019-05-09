@@ -14,22 +14,22 @@ void pwm_init(){
 
         PWM_TCCRB = (1 << WGM13) | (1 << CS11); //set phase-freq correct PWM with ICR as TOP and prescaler x8
 
-        PWM_OCR_M1 = MAXSPEED; //set al outputs to 0
+        PWM_OCR_M1 = PWM_MAX; //set al outputs to 0
 
-        PWM_OCR_M2 = MAXSPEED;
+        PWM_OCR_M2 = PWM_MAX;
 
-        PWM_OCR_M3 = 0;
+        PWM_OCR_M3 = PWM_MAX;
 
         sei();
 }
 
-void pwm(uint8_t motnum, uint8_t speed){
+void pwm(uint8_t motnum, uint16_t speed){
 
         switch(motnum){
 
-                case M1 : PWM_OCR_M1=speed;
-                case M2 : PWM_OCR_M2=speed;
-                case M3 : PWM_OCR_M3=speed;
+                case M1 : PWM_OCR_M1=PWM_MAX-speed; break;
+                case M2 : PWM_OCR_M2=PWM_MAX-speed; break;
+                case M3 : PWM_OCR_M3=PWM_MAX-speed; break;
 	}
 }
 

@@ -3,7 +3,6 @@
 
 
 #include "motion.h"
-#include "main.h"
 #include "drivers/motor.h"
 
 #ifdef  _LIB_CALL_
@@ -71,7 +70,7 @@ void block(){
 
 void motion_init(){
 motor_init();
-homeAll();
+//homeAll(); //#@#
 }
 
 void homeAll(){
@@ -81,23 +80,20 @@ void homeAll(){
 
 void homeX(){
   setDir(M3,RIGHT);
-  setWantedPos(M3,0);
-  setSpeed(M3, MAXSPEED);
   enableMotor(M3);
+  setSpeed(M3, MAXSPEED);
 #ifdef _LIB_CALL_
   block();
 #endif
 }
 
 void homeZ(){
-  setDir(M1, UP);
-  setSpeed(M1, MAXSPEED);
-  setDir(M2, UP);
-  setSpeed(M2, MAXSPEED);
-  setWantedPos(M1,0);
-  setWantedPos(M2,0);
+  setDir(M1,DOWN);
+  setDir(M2,DOWN);
   enableMotor(M1);
   enableMotor(M2);
+  setSpeed(M1, MAXSPEED);
+  setSpeed(M2, MAXSPEED);
 #ifdef 	_LIB_CALL_
   block();
 #endif

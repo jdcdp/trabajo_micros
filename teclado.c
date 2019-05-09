@@ -1,9 +1,8 @@
-#include <avr/io.h>
+/*#include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 #include "motion.h"
 #include "pinout.h"
-#include "main.h"
 
 //Variables
 
@@ -15,8 +14,7 @@ uint8_t already_selected = 0; //Variable para determinar si ya hay un producto s
 
 //Funciones para integración
 
-void nothing_selected()
-{
+void nothing_selected(){
 	already_selected = 0;
 }
 
@@ -45,7 +43,8 @@ ISR(TIMER1_OVF_vect)//Hay que sustituirlo por el de uso común
 
 void delayMs(int ms)
 {
-	for(volatile int i = 0; i < ms; i++){
+	for(volatile int i = 0; i < ms; i++)
+	{
 		for(volatile int j = 0; j < 421; j++);
 	}
 }
@@ -53,17 +52,20 @@ void delayMs(int ms)
 void position(int pos)// De aquí se envía la posición ha Jaime
 {
 	if(already_selected == 0){
+		selectProduct(pos); //Envio posición a Jaime
 		already_selected = 1;
-		selectProduct(pos); //Envio posición a Jaime	
-	} 
-	else{
+	} else
+	{
+		{
 			blink_led();
+		}
 	}
 }
 
 void blink_led() //Función que hace parpadear el led en caso de pulsar el teclado un producto ya seleccionado
 {
-	for(volatile int i=0; i<4; i++){
+	for(volatile int i=0; i<4; i++)
+	{
 		PORTB |= (1 << PB0);
 		delayMs(100);
 		PORTB = 0b11111110 & PINB;
@@ -71,22 +73,17 @@ void blink_led() //Función que hace parpadear el led en caso de pulsar el tecla
 	}
 }
 
-void change_led()
-{
-	if (PINB & 0x01)
- 		PORTB |= (0 << PB0);
-	else PORTB |= (1 << PB0);
-}
-
 ISR(KEYPAD) //Función asociado a las interrupciones del teclado
 {
 	if(enable){
 		enable = 0;
 		PORTB = 0b10000000; //Empezamos por la primera columna
-		while(PORTB != 0b00010000){
+		while(PORTB != 0b00010000)
+		{
 			delayMs(1);
 			keypad_in = PINB & 0b11111100; //Enmascaro
-			switch(keypad_in){
+			switch(keypad_in)
+			{
 				case 0b10010000: position(1); break;
 				case 0b10001000: position(2); break;
 				case 0b10000100: position(3); break;
@@ -104,11 +101,6 @@ ISR(KEYPAD) //Función asociado a las interrupciones del teclado
 	}
 }
 
-ISR (PIEZO)
-{
-	change_choque();
-}
-
 void setup_teclado()
 {
 	DDRB = 0b11100001; //Puerto K SALIDA/ENTRADA-TECLADO
@@ -123,3 +115,4 @@ void setup_teclado()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/

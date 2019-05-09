@@ -1,3 +1,4 @@
+
 //AUTHOR: Jaime de Castro 14708
 //Motor control
 #include "motor.h"
@@ -8,15 +9,18 @@ void motor_init(){
   cli();
   
   //Set optical encoders' interrupts
-  EICRA|=(1<<ISC10|1<<ISC00);
+  EICRA|=(1<<ISC10 | 1<<ISC11| 1<<ISC00 | 1<<ISC01); //11=rising
   EIMSK|=(1<<INT1 | 1<<INT0);
   
   //Set endstops' interrupts
+  
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
   PCICR = 0b00000100; //PCINT DEL PUERTO K
   PCMSK2 = 0b11111111; //Enable PCINT2
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
+  
+  DIRDDR|=1<<DDL2 | 1<<DDL6 | 1<<DDL7;
   
   //Set pwm timers
   pwm_init();
@@ -26,18 +30,13 @@ void motor_init(){
 void update_pwm(){
   int i;
   for(i=0;i<4;i++){
-    if(motor[i].en){
-      switch(i){
-	case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[i].dir);
-        case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[i].dir);
-        case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[i].dir);
+     	  if(motor[i].en){
+		 pwm(i,motor[i].spd);
       }
-      pwm(i,motor[i].spd);
-    }
-    else{
-      pwm(i,0);
-    }
-  }
+      else{
+		 pwm(i,0);
+     }
+ }
 }
 
 uint8_t setSpeed(uint8_t motnum,uint16_t spd){
@@ -81,7 +80,11 @@ void setDir(uint8_t motnum, uint8_t direction){
   else{
     motor[motnum].dir=0;
   }
-  update_pwm();
+   switch(motnum){
+		case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[motnum].dir); break;
+        case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[motnum].dir); break;
+        case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[motnum].dir); break;
+	  }
 }
 
 void setPos(uint8_t motnum, uint16_t wpos){
@@ -107,24 +110,24 @@ uint16_t getWantedPos(uint8_t motnum){
 
 ISR(ENDSTOP_INTERRUPT){
 
-  /*read all pin changes*/
+  //read all pin changes
   switch(ENDSTOPS ^ endstop_state) {
 
-		case 1<<0: ISR_SW1();
+		case 1<<0: ISR_SW1(); break;
 
-        case 1<<1: ISR_SW2();
+        case 1<<1: ISR_SW2(); break;
 
-        case 1<<2: ISR_SW3();
+        case 1<<2: ISR_SW3(); break;
 
-        case 1<<3: ISR_SW4();
+        case 1<<3: ISR_SW4(); break;
 
-        case 1<<4: ISR_SW5();
+        case 1<<4: ISR_SW5(); break;
 
-        case 1<<5: ISR_SW6();
+        case 1<<5: ISR_SW6(); break;
 
-        case 1<<6: PCMSK2 &= ~1<<6; ISR_SW7(); delay(10);//!Bounces
+        case 1<<6: PCMSK2 &= ~1<<6; ISR_SW7(); delay(10); break;//!Bounces
 
-        case 1<<7: PCMSK2 &= ~1<<7; ISR_SW8(); delay(10);//!Bounces
+        case 1<<7: PCMSK2 &= ~1<<7; ISR_SW8(); delay(10); break;//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -143,6 +146,7 @@ void ISR_SW2(){//Endstop M1_LOW
   disableMotor(M1);
   setDir(M1,UP);
   setPos(M1,0);
+  unblock();
 }
 
 void ISR_SW3(){//Endstop M2_HIGH
@@ -154,6 +158,7 @@ void ISR_SW4(){//Endstop M2_LOW
   disableMotor(M2);
   setDir(M2,UP);
   setPos(M2,0);
+  unblock();
 }
 
 void ISR_SW5(){//Endstop M3_RIGHT
@@ -169,6 +174,9 @@ void ISR_SW6(){//Endstop M3_LEFT
 
 
 void ISR_SW7(){//Position detector M3
+	
+	
+	/*
  if(motor[M3].dir==LEFT){
     if(PIN_SW7){
 		motor[M3].pos++;
@@ -209,7 +217,7 @@ void ISR_SW7(){//Position detector M3
 			setDir(M3,LEFT);
 			 }
 		 }
-	
+*/	
 }
 
 
@@ -223,7 +231,11 @@ void ISR_SW8(){ //M4 step counter
   }
 }
 
+int debpos1=0;
+int debpos2=0;
+
 ISR(SO3){//Optical Encoder M1
+	debpos1++;
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }
@@ -234,10 +246,13 @@ ISR(SO3){//Optical Encoder M1
   if(timenow()&5==0){ //Para suavizar las interrupciones, apaño temporal
 	motorZroutine();
   }
-#endif
+#endif 
+//delay(1);
 }
 
+
 ISR(SO4){//Optical Encoder M2
+	debpos2++;
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
@@ -247,7 +262,7 @@ ISR(SO4){//Optical Encoder M2
 #ifdef _LIB_CALL_
   libcall_motorsync();
 #endif
-
+//delay(1);
 }
 
 
