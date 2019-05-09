@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "motion.h"
 #include "pinout.h"
+#include "main.h"
 
 //Variables
 
@@ -94,6 +95,11 @@ ISR(KEYPAD) //Función asociado a las interrupciones del teclado
 		PORTB = 0b11100000;
 		debounceMs(); //Cambiar en función de la función común de antirrebotes
 	}
+}
+
+ISR (PIEZO)
+{
+	change_choque();
 }
 
 void setup_teclado()
