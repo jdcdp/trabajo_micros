@@ -3,7 +3,7 @@
 
 //Funciones integración
 
-void nothing_selected()
+void nothing_selected();
 void setup_teclado();
 
 //Funciones 
