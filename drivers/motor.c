@@ -7,21 +7,21 @@ int debug;
 
 void motor_init(){
   cli();
-  
+
   //Set optical encoders' interrupts
   EICRA|=(1<<ISC10 | 1<<ISC11| 1<<ISC00 | 1<<ISC01); //11=rising
   EIMSK|=(1<<INT1 | 1<<INT0);
-  
+
   //Set endstops' interrupts
-  
+
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
   PCICR = 0b00000100; //PCINT DEL PUERTO K
   PCMSK2 = 0b11111111; //Enable PCINT2
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
-  
+
   DIRDDR|=1<<DDL2 | 1<<DDL6 | 1<<DDL7;
-  
+
   //Set pwm timers
   pwm_init();
   sei();
@@ -174,9 +174,10 @@ void ISR_SW6(){//Endstop M3_LEFT
 
 
 void ISR_SW7(){//Position detector M3
-	
-	
-	/*
+
+//Borrar y hacer de nuevo
+
+/*
  if(motor[M3].dir==LEFT){
     if(PIN_SW7){
 		motor[M3].pos++;
@@ -217,7 +218,7 @@ void ISR_SW7(){//Position detector M3
 			setDir(M3,LEFT);
 			 }
 		 }
-*/	
+*/
 }
 
 
@@ -231,8 +232,8 @@ void ISR_SW8(){ //M4 step counter
   }
 }
 
-int debpos1=0;
-int debpos2=0;
+int debpos1=0;//#@#
+int debpos2=0;//#@#
 
 ISR(SO3){//Optical Encoder M1
 	debpos1++;
@@ -243,16 +244,14 @@ ISR(SO3){//Optical Encoder M1
     motor[M1].pos--;
   }
 #ifdef _LIB_CALL_
-  if(timenow()&5==0){ //Para suavizar las interrupciones, apaño temporal
 	motorZroutine();
-  }
-#endif 
+#endif
 //delay(1);
 }
 
 
 ISR(SO4){//Optical Encoder M2
-	debpos2++;
+	debpos2++;#@#
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
