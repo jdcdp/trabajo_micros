@@ -14,8 +14,8 @@
 #define M2 	1
 #define M3 	2
 #define M4 	3
-#define UP 	0
-#define DOWN 	1
+#define UP 	1
+#define DOWN 	0
 #define RIGHT	0
 #define LEFT 	1
 
@@ -24,7 +24,7 @@
 #define TOUCH_DELAY 	300 /*Delay in ms to move around M3's trigger point*/
 #define SLOW_CONTACT 	0x2FFF /*Slow speed for M3 alignment*/
 
-#define YTURNCOUNT	4 //number of steps to signal supposed product release
+#define YTURNCOUNT	10 //number of steps to signal supposed product release
 
 #define ZALIGNSLOW	5 //Z step offset to slow movement
 #define ZALIGNSPEED	0xAFFF //Speed when slowing
@@ -42,8 +42,6 @@ struct motor {
 
 uint8_t endstop_state;
 
-
-uint8_t debpos;
 
 //Functions
 
@@ -64,6 +62,8 @@ void setPos(uint8_t motnum, uint16_t wpos);
 void setWantedPos(uint8_t motnum, uint16_t wpos);
 
 uint16_t getPos(uint8_t motnum);
+
+uint16_t getWantedPos(uint8_t motnum);
 
 void update_pwm();
 

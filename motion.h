@@ -12,13 +12,22 @@
 #define ENC2FLOOR1 100 //encoder steps for floor level
 #define ENC2FLOOR2 200
 #define ENC2FLOOR3 300
+#define ZOFFSET	   5  //Offset for x alignment
 
-//#define _LIB_CALL_
+#define _LIB_CALL_
 #ifdef 	_LIB_CALL_
 
 #define MAXDELTA 5 //Minimum offset to start correction
 
+uint8_t is_blocked;
+
+void block();
+
+void unblock();
+
 void libcall_motorsync();
+
+void libcall_motorZroutine();
 
 #endif
 

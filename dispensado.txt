@@ -40,7 +40,7 @@ uint8_t ALREADY_SELECTED = 1; //Manejar en conjunto con keypad
 
 
 
-void setup()
+void setup_dispensado()
 
 {
 	cli();

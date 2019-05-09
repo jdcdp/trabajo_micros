@@ -12,6 +12,6 @@
 
 void pwm_init();
 
-void pwm(uint8_t motnum, uint8_t speed);
+void pwm(uint8_t motnum, uint16_t speed);
 
 #endif

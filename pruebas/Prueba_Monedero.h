@@ -1,8 +1,8 @@
 /*
- * Pruebas_Monedero.h
+ * Prueba_Monedero.h
  *
  * Created: 08/05/2019 11:14:51
- *  Author: Admin
+ *  Author: Guillermo
  */ 
 
 

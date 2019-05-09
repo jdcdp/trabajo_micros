@@ -10,13 +10,18 @@
 
 void init(){
 // Aqui se llaman a las funciones de inicialización
-motion_init();
-time_init();
+ motion_init();
+ time_init();
 }
 
 
 int main(){
   init();
+  //setDir(M1,UP);
+  //setDir(M2,UP);
+  // homeZ();
+  //homeX();
+
   HOLD();
 return 0;
 }
