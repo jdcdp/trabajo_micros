@@ -23,26 +23,10 @@ void libcall_motorsync(){
 }
 
 
-/*	Demasiado intensivo, medir solo uno de los encoders
-void motorZroutine(){
- int16_t d1,d2;
- d1=abs(motor[M1].fpos-motor[M1].pos);
- d2=abs(motor[M2].fpos-motor[M2].pos);
- if(min(d1,d2)<ZALIGNSTOP){
- disableMotor(M1);
- disableMotor(M2);
- enableMotor(M3);
- }
- else if (min(d1,d2)<ZALIGNSLOW){
- setSpeed(M1,ZALIGNSPEED);
- setSpeed(M2,ZALIGNSPEED);
- }
-}*/
-
 
 void libcall_motorZroutine(){
  int16_t d;
- d=abs(motor[M1].fpos-motor[M1].pos);
+ d=min(abs(motor[M1].fpos-motor[M1].pos),abs(motor[M2].fpos-motor[M2].pos));
  if(d<ZALIGNSTOP){
  disableMotor(M1);
  disableMotor(M2);
