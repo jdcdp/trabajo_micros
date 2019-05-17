@@ -5,6 +5,7 @@
 #include "motion.h"
 #include "drivers/motor.h"
 
+#define _LIB_CALL_
 #ifdef  _LIB_CALL_
 
 void libcall_motorsync(){
@@ -95,7 +96,7 @@ void moveZ(uint16_t position){
 #endif
 }
 
-void moveX(uint8_t position){ 
+void moveX(uint8_t position){
   setWantedPos(M3,position);
   if(PIN_SW7==0 && getPos(M3)!=getWantedPos(M3)){
 	setDir(M3,((getPos(M3)<position) ^ RIGHT));

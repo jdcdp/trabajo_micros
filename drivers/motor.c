@@ -81,10 +81,10 @@ void setDir(uint8_t motnum, uint8_t direction){
     motor[motnum].dir=0;
   }
    switch(motnum){
-		case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[motnum].dir); break;
+	case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[motnum].dir); break;
         case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[motnum].dir); break;
         case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[motnum].dir); break;
-	  }
+  }
 }
 
 void setPos(uint8_t motnum, uint16_t wpos){
@@ -113,7 +113,7 @@ ISR(ENDSTOP_INTERRUPT){
   //read all pin changes
   switch(ENDSTOPS ^ endstop_state) {
 
-		case 1<<0: ISR_SW1(); break;
+	case 1<<0: ISR_SW1(); break;
 
         case 1<<1: ISR_SW2(); break;
 
@@ -174,51 +174,34 @@ void ISR_SW6(){//Endstop M3_LEFT
 
 
 void ISR_SW7(){//Position detector M3
-
-//Borrar y hacer de nuevo
-
-/*
  if(motor[M3].dir==LEFT){
-    if(PIN_SW7){
+ 	if(ENDSTOPS & 1<<6){
 		motor[M3].pos++;
-        if(motor[M3].pos==motor[M3].fpos) {
-				if(motor[M3].spd==SLOW_CONTACT) {
-					disableMotor(M3);
-#ifdef _LIB_CALL_
-					unblock();
-#endif
-				}
-				else {
-					setSpeed(M3,SLOW_CONTACT);
-				}
+		if (getPos(M3)==getWantedPos(M3)){
+			disableMotor(M3);
 		}
+	}
 	else{
-		if(getPos(M3)>=getWantedPos(M3)){
+		if (getPos(M3)>=getWantedPos(M3)){
 			setDir(M3,RIGHT);
 		}
 	}
  }
- 
- else{
-	 if(PIN_SW7){
-		 if(motor[M3].pos==motor[M3].fpos) {
-			 if(motor[M3].spd==SLOW_CONTACT) {
-				 disableMotor(M3);
-#ifdef 	_LIB_CALL_
-				 unblock();
-#endif
-			 }
-			 else {
-				 setSpeed(M3,SLOW_CONTACT);
-			 }
-		 }
-	else{
+ else if(motor[M3].dir=RIGHT){
+        if(ENDSTOPS & 1<<6){
+                if (getPos(M3)==getWantedPos(M3)){
+                        disableMotor(M3);
+                }
+        }
+        else{
 		motor[M3].pos--;
-		if(getPos(M3)<getWantedPos(M3)){
-			setDir(M3,LEFT);
-			 }
-		 }
-*/
+                if (getPos(M3)<=getWantedPos(M3)){
+                        setDir(M3,LEFT);
+                }
+        }
+
+ }
+
 }
 
 
@@ -232,11 +215,8 @@ void ISR_SW8(){ //M4 step counter
   }
 }
 
-int debpos1=0;//#@#
-int debpos2=0;//#@#
 
 ISR(SO3){//Optical Encoder M1
-	debpos1++;
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }
@@ -251,7 +231,6 @@ ISR(SO3){//Optical Encoder M1
 
 
 ISR(SO4){//Optical Encoder M2
-	debpos2++;#@#
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
