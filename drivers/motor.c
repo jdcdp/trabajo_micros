@@ -3,7 +3,9 @@
 //Motor control
 #include "motor.h"
 
-int debug;
+#ifndef _LIB_CALL_
+error
+#endif
 
 void motor_init(){
   cli();
@@ -113,21 +115,21 @@ ISR(ENDSTOP_INTERRUPT){
   //read all pin changes
   switch(ENDSTOPS ^ endstop_state) {
 
-	case 1<<0: ISR_SW1(); break;
+	case 1<<SW1: ISR_SW1(); break;
 
-        case 1<<1: ISR_SW2(); break;
+        case 1<<SW2: ISR_SW2(); break;
 
-        case 1<<2: ISR_SW3(); break;
+        case 1<<SW3: ISR_SW3(); break;
 
-        case 1<<3: ISR_SW4(); break;
+        case 1<<SW4: ISR_SW4(); break;
 
-        case 1<<4: ISR_SW5(); break;
+        case 1<<SW5: ISR_SW5(); break;
 
-        case 1<<5: ISR_SW6(); break;
+        case 1<<SW6: ISR_SW6(); break;
 
-        case 1<<6: PCMSK2 &= ~1<<6; ISR_SW7(); delay(10); break;//!Bounces
+        case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); delay(5); break;//!Bounces
 
-        case 1<<7: PCMSK2 &= ~1<<7; ISR_SW8(); delay(10); break;//!Bounces
+        case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); delay(5); break;//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }

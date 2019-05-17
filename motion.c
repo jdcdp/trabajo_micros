@@ -64,24 +64,28 @@ void homeAll(){
 }
 
 void homeX(){
-  setDir(M3,RIGHT);
-  enableMotor(M3);
-  setSpeed(M3, MAXSPEED);
+  if((ENDSTOPS & (1<<SW5))==0){ //If the motor is not already homed
+     setDir(M3,RIGHT);
+     enableMotor(M3);
+     setSpeed(M3, MAXSPEED);
 #ifdef _LIB_CALL_
-  block();
+     block();
 #endif
+  }
 }
 
 void homeZ(){
-  setDir(M1,DOWN);
-  setDir(M2,DOWN);
-  enableMotor(M1);
-  enableMotor(M2);
-  setSpeed(M1, MAXSPEED);
-  setSpeed(M2, MAXSPEED);
+  if(((ENDSTOPS & (1<<SW2))==0) | ((ENDSTOPS & (1<<SW4))==0)){ //If some motor is not already homed
+     setDir(M1,DOWN);
+     setDir(M2,DOWN);
+     enableMotor(M1);
+     enableMotor(M2);
+     setSpeed(M1, MAXSPEED);
+     setSpeed(M2, MAXSPEED);
 #ifdef 	_LIB_CALL_
-  block();
+     block();
 #endif
+  }
 }
 
 
