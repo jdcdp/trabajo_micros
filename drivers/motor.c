@@ -175,9 +175,9 @@ void ISR_SW6(){//Endstop M3_LEFT
 }
 
 
-void ISR_SW7(){//Position detector M3
+void ISR_SW7(){//Position detector M3			/*comprobar*/
  if(motor[M3].dir==LEFT){
- 	if(ENDSTOPS & 1<<6){
+ 	if((ENDSTOPS & 1<<SW7)==0){ //Activo por nivel bajo
 		motor[M3].pos++;
 		if (getPos(M3)==getWantedPos(M3)){
 			disableMotor(M3);
@@ -190,7 +190,7 @@ void ISR_SW7(){//Position detector M3
 	}
  }
  else if(motor[M3].dir=RIGHT){
-        if(ENDSTOPS & 1<<6){
+        if((ENDSTOPS & 1<<SW7)==0){ //Activo por nivel bajo
                 if (getPos(M3)==getWantedPos(M3)){
                         disableMotor(M3);
                 }

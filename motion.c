@@ -68,10 +68,10 @@ void homeX(){
      setDir(M3,RIGHT);
      enableMotor(M3);
      setSpeed(M3, MAXSPEED);
-#ifdef _LIB_CALL_
-     block();
-#endif
   }
+#ifdef _LIB_CALL_
+  block();
+#endif
 }
 
 void homeZ(){
@@ -82,10 +82,10 @@ void homeZ(){
      enableMotor(M2);
      setSpeed(M1, MAXSPEED);
      setSpeed(M2, MAXSPEED);
-#ifdef 	_LIB_CALL_
-     block();
-#endif
   }
+#ifdef 	_LIB_CALL_
+  block();
+#endif
 }
 
 

@@ -6,7 +6,7 @@ void pwm_init(){
 
         cli();
 
-		PWM_DDR|= (1<<DDB3) | (1<<DDB4) | (1<<DDB5); //output on all pins
+	PWM_DDR|= (1<<DDB3) | (1<<DDB4) | (1<<DDB5); //output on all pins
 
         PWM_TOP = PWM_MAX;
 
