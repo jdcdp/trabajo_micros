@@ -34,7 +34,7 @@
 
 -   *substract_saldo(uint8_t gasto):* resta el saldo correspondiente(activar con piezoelectrico)
 
--   <span style="color:red">*syscall_aligned():*</span> notifica al sistema de que los motores están en posición.
+-   <span style="color:blue"> *syscall_aligned():* </span> notifica al sistema de que los motores están en posición.
 
 
 &nbsp;
