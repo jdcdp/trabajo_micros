@@ -57,7 +57,7 @@
 float get_saldo();
 int get_ultima_moneda();
 
-int calculate_ultima_moneda(float relacion);
+int8_t calculate_ultima_moneda(float relacion);
 void add_saldo(int ultima_moneda);
 
 
@@ -65,13 +65,7 @@ ISR(S01_TIMERn_CAPT_vect);
 
 void setup_coin();
 
-/*Barrera*/
 
-//M5
-#define M5_BK_PIN	(PIND & 0x10)
-
-//SW9
-#define SW9_PIN		(PIND & 0x04)
 
 //Funciones
 

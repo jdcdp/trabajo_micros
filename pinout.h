@@ -23,6 +23,15 @@
 #define S02_TIMSKn 	TIMSK1
 #define S02_ICRn 	ICR1
 
+/*Barrera*/
+
+//M5
+#define M5_BK_PIN	(PIND & 0x10)
+
+//SW9
+#define SW9_PIN		(PIND & 0x04)
+
+
 
 //drivers/time_m.h
 #define TIME_TCCRA 	TCCR0A
@@ -64,11 +73,5 @@
 
 //teclado.h
 #define KEYPAD (PCINT0_vect)
-
-
-//barrera.h
-#define M5_BK_PIN (PIND & 0x10)
-
-#define SW9_PIN (PIND & 0x02)
 
 #endif

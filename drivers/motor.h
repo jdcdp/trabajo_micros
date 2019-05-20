@@ -9,6 +9,7 @@
 #include "../pinout.h"
 #include "pwm.h"
 #include "time.h"
+#include "../motion.h"
 
 #define M1 	0
 #define M2 	1

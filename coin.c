@@ -7,6 +7,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdint.h>
 
 #include "coin.h"
 #include "time.h"
@@ -70,7 +71,7 @@ void cerrar_barrera(){
 }
 
 
-uint8_t calculate_ultima_moneda(float relacion){
+int8_t calculate_ultima_moneda(float relacion){
 
 	if((relacion > C10MIN) && (relacion < C10MAX)){
 		return 1; //10 cent
@@ -192,13 +193,4 @@ void setup_coin(){
 	
 }
 
-
-int main(void)
-{
-	setup_coin();
-
-	while (1){
-		
-	}
-}
 

@@ -3,6 +3,7 @@
 //Motor control
 #include "motor.h"
 
+#define _LIB_CALL_
 #ifndef _LIB_CALL_
 error
 #endif
@@ -189,7 +190,7 @@ void ISR_SW7(){//Position detector M3			/*comprobar*/
 		}
 	}
  }
- else if(motor[M3].dir=RIGHT){
+ else if(motor[M3].dir==RIGHT){
         if((ENDSTOPS & 1<<SW7)==0){ //Activo por nivel bajo
                 if (getPos(M3)==getWantedPos(M3)){
                         disableMotor(M3);
@@ -226,7 +227,7 @@ ISR(SO3){//Optical Encoder M1
     motor[M1].pos--;
   }
 #ifdef _LIB_CALL_
-	motorZroutine();
+	libcall_motorZroutine();
 #endif
 //delay(1);
 }
