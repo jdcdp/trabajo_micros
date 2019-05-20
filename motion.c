@@ -64,7 +64,7 @@ void homeAll(){
 }
 
 void homeX(){
-  if((ENDSTOPS & (1<<SW5))==0){ //If the motor is not already homed
+  if((ENDSTOPS & (1<<SW5))==0){ //If the motor is not already in home position
      setDir(M3,RIGHT);
      enableMotor(M3);
      setSpeed(M3, MAXSPEED);
@@ -91,10 +91,13 @@ void homeZ(){
 
 
 void moveZ(uint16_t position){
+  
   setWantedPos(M1,position);
   setWantedPos(M2,position);
   enableMotor(M1);
   enableMotor(M2);
+  setSpeed(M1,MAXSPEED);
+  setSpeed(M2,MAXSPEED);
 #ifdef _LIB_CALL_
   block();
 #endif
@@ -137,16 +140,16 @@ void selectProduct(uint8_t num){
 
   disableAllMotors();
   homeX();
-  switch(num){
-    case 1: moveZ(ENC2FLOOR3+ZOFFSET);	moveX(3); moveZ(ENC2FLOOR3);
-    case 2: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR3);
-    case 3: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR3);
-    case 4: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR2);
-    case 5: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR2);
-    case 6: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR2);
-    case 7: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR1);
-    case 8: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR1);
-    case 9: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR1);
+  switch(num){//Sustituir por funcion inteligente
+    case 1: moveZ(ENC2FLOOR3+ZOFFSET);	moveX(3); moveZ(ENC2FLOOR3); break;
+    case 2: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR3); break;
+    case 3: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR3); break;
+    case 4: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR2); break;
+    case 5: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR2); break;
+    case 6: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR2); break;
+    case 7: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR1); break;
+    case 8: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR1); break;
+    case 9: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR1); break;
   }
  #ifdef _SYS_CALL_
   syscall_aligned();
