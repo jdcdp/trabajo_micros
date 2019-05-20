@@ -17,9 +17,9 @@ uint8_t check = 1; //Para la consulta periódica
 void product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido (o cuando hay dinero de más??Guille)
 {
     PORTB |= (1 << PB0);
-	delayMs(100);
-	PORTB &= ~(1 << PB0);
-	already_selected = 0; //Dejamos seleccionar de nuevo
+    delay(100);
+    PORTB &= ~(1 << PB0);
+    already_selected = 0; //Dejamos seleccionar de nuevo
 }
 
 void choose_again()
