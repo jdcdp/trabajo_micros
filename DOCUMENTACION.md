@@ -30,6 +30,12 @@
 
 -   *get_ultima_moneda :* coge el valor de la última moneda introducida
 
+-   *not_aligned():* Avisa de que no se debe mover al dispensador todavia
+
+-   *substract_saldo(uint8_t gasto):* resta el saldo correspondiente(activar con piezoelectrico)
+
+-   <span style="color:red">*syscall_aligned():*</span> notifica al sistema de que los motores están en posición.
+
 
 &nbsp;
 
@@ -39,7 +45,8 @@
 
 **Llamadas externas:**
 
--   *syscall_leer_saldo();*: Avisa al sistema del estado del saldo
+-   *moveY():*
+
 
 
 ## Control del movimiento(motion.h):
