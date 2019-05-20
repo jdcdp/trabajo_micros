@@ -115,6 +115,37 @@ void moveX(uint8_t position){
 #endif
 }
 
+void moveXZ(uint8_t row,uint8_t col){
+	
+	if(row!=motor[M1].pos){
+		
+		moveZ(getPos(M1)+ZOFFSET);
+		homeX();
+		switch(row){
+			case 1: moveZ(ENC2FLOOR3+ZOFFSET); break;
+			case 2: moveZ(ENC2FLOOR2+ZOFFSET); break;
+			case 3: moveZ(ENC2FLOOR1+ZOFFSET); break;
+		}
+		moveX(col);
+		switch(row){
+			case 1: moveZ(ENC2FLOOR3); break;
+			case 2: moveZ(ENC2FLOOR2); break;
+			case 3: moveZ(ENC2FLOOR1); break;
+		}
+	}
+	else if(col!=getPos(M3)){
+		
+		moveZ(getPos(M1)+ZOFFSET);
+		moveX(col);
+		switch(row){
+			case 1: moveZ(ENC2FLOOR3+ZOFFSET); break;
+			case 2: moveZ(ENC2FLOOR2+ZOFFSET); break;
+			case 3: moveZ(ENC2FLOOR1+ZOFFSET); break;
+		}
+	}
+	
+}
+
 
 void moveY(){
   setDir(M4,UP);
@@ -140,16 +171,16 @@ void selectProduct(uint8_t num){
 
   disableAllMotors();
   homeX();
-  switch(num){//Sustituir por funcion inteligente
-    case 1: moveZ(ENC2FLOOR3+ZOFFSET);	moveX(3); moveZ(ENC2FLOOR3); break;
-    case 2: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR3); break;
-    case 3: moveZ(ENC2FLOOR3+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR3); break;
-    case 4: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR2); break;
-    case 5: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR2); break;
-    case 6: moveZ(ENC2FLOOR2+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR2); break;
-    case 7: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(3); moveZ(ENC2FLOOR1); break;
-    case 8: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(2); moveZ(ENC2FLOOR1); break;
-    case 9: moveZ(ENC2FLOOR1+ZOFFSET);  moveX(1); moveZ(ENC2FLOOR1); break;
+  switch(num){
+    case 1: moveXZ(3,3) break;
+    case 2: moveXZ(3,2) break;
+    case 3: moveXZ(3,1) break;
+    case 4: moveXZ(2,3) break;
+    case 5: moveXZ(2,2) break;
+    case 6: moveXZ(2,1) break;
+    case 7: moveXZ(1,3) break;
+    case 8: moveXZ(1,2) break;
+    case 9: moveXZ(1,1) break;
   }
  #ifdef _SYS_CALL_
   syscall_aligned();
