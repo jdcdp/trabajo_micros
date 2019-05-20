@@ -54,7 +54,7 @@ void disableAllMotors();
 
 void enableMotor(uint8_t motnum);
 
-uint8_t setSpeed(uint8_t motnum,uint16_t spd);
+void setSpeed(uint8_t motnum,uint16_t spd);
 
 void setDir(uint8_t motnum,uint8_t direction);
 

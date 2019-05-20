@@ -1,6 +1,8 @@
 
 //AUTHOR: Jaime de Castro 14708
 //Motor control
+
+#include "avr/interrupt.h"
 #include "motor.h"
 
 #define _LIB_CALL_
@@ -33,6 +35,9 @@ void motor_init(){
   //Set pwm timers
   pwm_init();
   sei();
+  setDir(M1,DOWN);
+  setDir(M2,DOWN);
+  setDir(M3,RIGHT);
 }
 
 void update_pwm(){
@@ -47,41 +52,35 @@ void update_pwm(){
  }
 }
 
-uint8_t setSpeed(uint8_t motnum,uint16_t spd){
+void setSpeed(uint8_t motnum,uint16_t spd){
 
-  if (spd>MAXSPEED) {
-    spd=MAXSPEED;
-  }
-
-  if (motor[motnum].en){
-    motor[motnum].spd=spd;
-    update_pwm();
-    return 0;
-  }
-  else {
-    //PRINT ERROR: MOTOR DISABLED
-    return 1;
-  }
+	motor[motnum].spd=spd;
+	update_pwm();
 }
 
 void disableMotor(uint8_t motnum){
-  motor[motnum].en=0;
-  motor[motnum].spd=0;
-  update_pwm();
+
+	motor[motnum].en=0;
+	motor[motnum].spd=0;
+ 	update_pwm();
 }
 
 void disableAllMotors(){
-  disableMotor(M1);
-  disableMotor(M2);
-  disableMotor(M3);
-  disableMotor(M4);
+
+	disableMotor(M1);
+	disableMotor(M2);
+	disableMotor(M3);
+	disableMotor(M4);
 }
+
 void enableMotor(uint8_t motnum){
-  motor[motnum].en=1;
-  update_pwm();
+
+	motor[motnum].en=1;
+	update_pwm();
 }
 
 void setDir(uint8_t motnum, uint8_t direction){
+
   if(direction){
     motor[motnum].dir=1;
   }
@@ -96,46 +95,49 @@ void setDir(uint8_t motnum, uint8_t direction){
 }
 
 void setPos(uint8_t motnum, uint16_t wpos){
-  motor[motnum].pos=wpos;
+
+	motor[motnum].pos=wpos;
 }
 
 void setWantedPos(uint8_t motnum, uint16_t wpos){
-  motor[motnum].fpos=wpos;
+
+	motor[motnum].fpos=wpos;
 }
 
 uint16_t getPos(uint8_t motnum){
-  return motor[motnum].pos;
+
+ 	return motor[motnum].pos;
 }
 
 uint16_t getWantedPos(uint8_t motnum){
+
 	return motor[motnum].fpos;
 }
 
 
 
 
-#include "avr/interrupt.h"
 
 ISR(ENDSTOP_INTERRUPT){
 
   //read all pin changes
-  switch((ENDSTOPS ^ endstop_state) & ENDSTOPS) {
+  switch(ENDSTOPS ^ endstop_state) {
 
-		case 1<<SW1: ISR_SW1(); break;
+	case 1<<SW1: if (ENDSTOPS & 1<<SW1) {ISR_SW1();} break; //Only rise
 
-        case 1<<SW2: ISR_SW2(); break;
+	case 1<<SW2: if (ENDSTOPS & 1<<SW2) {ISR_SW2();} break;
 
-        case 1<<SW3: ISR_SW3(); break;
+	case 1<<SW3: if (ENDSTOPS & 1<<SW3) {ISR_SW3();} break;
 
-        case 1<<SW4: ISR_SW4(); break;
+	case 1<<SW4: if (ENDSTOPS & 1<<SW4) {ISR_SW4();} break;
 
-        case 1<<SW5: ISR_SW5(); break;
+	case 1<<SW5: if (ENDSTOPS & 1<<SW5) {ISR_SW5();} break;
 
-        case 1<<SW6: ISR_SW6(); break;
+	case 1<<SW6: if (ENDSTOPS & 1<<SW1) {ISR_SW6();} break;
 
-        case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); /*delay(5);*/ break;//!Bounces
+	case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); delay(5); break;//Rise and fall, debounce
 
-        case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); /*delay(5);*/ break;//!Bounces
+	case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); delay(5); break;
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -146,71 +148,66 @@ ISR(ENDSTOP_INTERRUPT){
 
 
 void ISR_SW1(){ //Endstop M1_HIGH
-  disableMotor(M1);
-  setDir(M1,DOWN);
+
+	disableMotor(M1);
+	setDir(M1,DOWN);
 }
 
 void ISR_SW2(){//Endstop M1_LOW
-  disableMotor(M1);
-  setDir(M1,UP);
-  setPos(M1,0);
-  unblock();
+
+	disableMotor(M1);
+	setDir(M1,UP);
+	setPos(M1,0);
+	unblock();
 }
 
 void ISR_SW3(){//Endstop M2_HIGH
-  disableMotor(M2);
-  setDir(M2,DOWN);
+
+	disableMotor(M2);
+	setDir(M2,DOWN);
 }
 
 void ISR_SW4(){//Endstop M2_LOW
-  disableMotor(M2);
-  setDir(M2,UP);
-  setPos(M2,0);
-  unblock();
+
+	disableMotor(M2);
+	setDir(M2,UP);
+ 	setPos(M2,0);
+	unblock();
 }
 
 void ISR_SW5(){//Endstop M3_RIGHT
-  disableMotor(M3);
-  setDir(M3,LEFT);
-  setPos(M3,0);
-  unblock();
+
+	disableMotor(M3);
+	setDir(M3,LEFT);
+	setPos(M3,0);
+	unblock();
 }
 
 void ISR_SW6(){//Endstop M3_LEFT
-  disableMotor(M3);
-  setDir(M3,LEFT);
+
+	disableMotor(M3);
+	setDir(M3,LEFT);
 }
 
 
 void ISR_SW7(){//Position detector M3			/*comprobar*/
- if(motor[M3].dir==LEFT){
+
+   if(motor[M3].dir==LEFT){
  	if((ENDSTOPS & 1<<SW7)==0){ //Activo por nivel bajo
 		motor[M3].pos++;
 		if (getPos(M3)==getWantedPos(M3)){
+
+			setDir(M3,RIGHT);
+			//delay?
 			disableMotor(M3);
 		}
 	}
-	else{
-		if (getPos(M3)>=getWantedPos(M3)){
-			setDir(M3,RIGHT);
-		}
-	}
- }
- else if(motor[M3].dir==RIGHT){
-        if((ENDSTOPS & 1<<SW7)==0){ //Activo por nivel bajo
-                if (getPos(M3)==getWantedPos(M3)){
-                        disableMotor(M3);
-                }
-        }
-        else{
+   }
+   else if(motor[M3].dir==RIGHT){
+        if((ENDSTOPS & 1<<SW7)){ //Inactivo por nivel alto
 		motor[M3].pos--;
-                if (getPos(M3)<=getWantedPos(M3)){
-                        setDir(M3,LEFT);
-                }
         }
-
- }
-
+   }
 }
 
 
@@ -227,7 +224,7 @@ void ISR_SW8(){ //M4 step counter
 
 
 ISR(SO3){//Optical Encoder M1
-	
+
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }
@@ -235,7 +232,8 @@ ISR(SO3){//Optical Encoder M1
     motor[M1].pos--;
   }
 #ifdef _LIB_CALL_
-	libcall_motorZroutine();
+   libcall_motorsync();
+   libcall_motorZroutine();
 #endif
 //delay(1);
 debpos1++;
@@ -243,7 +241,7 @@ debpos1++;
 
 
 ISR(SO4){//Optical Encoder M2
-	
+
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
@@ -251,7 +249,8 @@ ISR(SO4){//Optical Encoder M2
     motor[M2].pos--;
   }
 #ifdef _LIB_CALL_
-  libcall_motorsync();
+   libcall_motorsync();
+   libcall_motorZroutine();
 #endif
 //delay(1);
 debpos2++;

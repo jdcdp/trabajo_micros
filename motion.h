@@ -17,7 +17,7 @@
 #define _LIB_CALL_
 #ifdef 	_LIB_CALL_
 
-#define MAXDELTA 5 //Minimum offset to start correction
+#define MAXDELTA 10 //Minimum offset to start correction
 
 uint8_t is_blocked;
 
@@ -31,7 +31,7 @@ void libcall_motorZroutine();
 
 #endif
 
-void motion_init();
+void setup_motion();
 
 void homeAll();
 
@@ -48,8 +48,6 @@ void moveXY(uint8_t row, uint8_t col);
 void moveY();
 
 void stopY();
-
-uint8_t getState();//depende de la integracion
 
 void selectProduct(uint8_t num);
 

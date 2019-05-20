@@ -1,9 +1,4 @@
-/*
- * prueba.c
- *
- * Created: 20/05/2019 11:23:09
- * Author : junti
- */ 
+//Archivo de integraciÃ³n
 
 #include <avr/io.h>
 #include "pinout.h"
@@ -18,8 +13,8 @@
 
 void init(){
 // Aqui se llaman a las funciones de inicialización
- motion_init();
- time_init();
+ setup_time();
+ setup_motion();
  setup_coin();
  setup_teclado();
 }
@@ -27,9 +22,7 @@ void init(){
 
 int main(){
   init();
-  setDir(M3,RIGHT);
-  //homeAll();
-  //---------
+
   //moveZ(150);
 
 
