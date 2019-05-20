@@ -16,7 +16,9 @@
 
 ## teclado (teclado.h):
 
-- *select_again(): función que se llama cuando no hay producto para encender LED y seleccionar de nuevo
+- *product_out(): función que se llama cuando no hay producto para encender LED y seleccionar de nuevo
+
+- *choose_again(): función para dejar seleccionar si el consumidor cambia de idea. 
 
 ## Sensor de monedas(coin.h):
 
