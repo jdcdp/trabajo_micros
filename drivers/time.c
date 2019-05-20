@@ -46,8 +46,6 @@ ISR(TIMER0_COMPA_vect){
 }
 
 //-----------------------------------------------------------------
-uint64_t current_time;
-int barrera_parada;
 
 void esperar_moneda(){ //Espera a que pase la moneda para cerrar la barrera
 	
