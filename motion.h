@@ -43,6 +43,8 @@ void moveZ(uint16_t position);
 
 void moveX(uint8_t position);
 
+void moveXY(uint8_t row, uint8_t col);
+
 void moveY();
 
 void stopY();
