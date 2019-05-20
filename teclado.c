@@ -11,6 +11,9 @@ uint8_t already_selected = 0; //Variable para determinar si ya hay un producto s
 uint8_t enable_blink = 0;
 uint8_t check = 1; //Para la consulta periódica
 
+uint8_t posicion = 0;
+uint8_t enviado = 0;
+
 
 //Funciones para integración
 
@@ -30,18 +33,18 @@ void choose_again()
 
 void debounceMs() //Hay que sustituirlo por el de uso común
 {
-	delay(8);
+	delayMs(8);
 	enable = 1;
 	PCIFR |= 0b00000001;
 }
 
-/*void delayMs(int ms)
+void delayMs(int ms)
 {
 	for(volatile int i = 0; i < ms; i++)
 	{
 		for(volatile int j = 0; j < 421; j++);
 	}
-}*/
+}
 
 
 /*ISR(TIMER1_OVF_vect)//Sustituible, es necesario una función de consulta periódica
@@ -52,11 +55,15 @@ void debounceMs() //Hay que sustituirlo por el de uso común
 
 void position(int pos)
 {
+	
 	enable = 0;
 	if(already_selected == 0)
 	{
-		selectProduct(pos); //Envio posición a Jaime
+		posicion = pos;
+		enviado++;
 		already_selected = 1;
+		//selectProduct(pos); //Envio posición a Jaime
+		
 	}else
 	{
 		enable_blink = 1;
@@ -71,9 +78,9 @@ void blink_led() //Parpadeo LED
 	for(volatile int i=0; i<4; i++)
 	{
 		PORTB |= (1 << PB0);
-		delay(100);
+		delayMs(100);
 		PORTB &= ~(1 << PB0);
-		delay(100);
+		delayMs(100);
 	}
 }
 
@@ -81,11 +88,11 @@ ISR(PCINT0_vect) //Función asociado a las interrupciones del teclado
 {
 	if(enable)
 	{
-		delay(1);
+		delayMs(1);
 		PORTB = 0b10000000; //Empezamos por la primera columna
 		while(PORTB != 0b00010000)
 		{
-			delay(1);
+			delayMs(1);
 			keypad_in = PINB & 0b11111100; //Enmascaro
 			switch(keypad_in)
 			{
@@ -101,7 +108,7 @@ ISR(PCINT0_vect) //Función asociado a las interrupciones del teclado
 			}
 			PORTB >>= 1;
 		}
-		delay(1);
+		delayMs(1);
 		PORTB = 0b11100000;
 		debounceMs(); //Cambiar en función de la función común de antirrebotes
 	}

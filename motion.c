@@ -55,7 +55,7 @@ void block(){
 
 void motion_init(){
 motor_init();
-//homeAll(); //#@#
+//homeAll();//#@# 
 }
 
 void homeAll(){
@@ -91,22 +91,27 @@ void homeZ(){
 
 
 void moveZ(uint16_t position){
-  
+	
+
+  setDir(M3,((getPos(M1)<position)?UP:DOWN));
   setWantedPos(M1,position);
   setWantedPos(M2,position);
   enableMotor(M1);
   enableMotor(M2);
   setSpeed(M1,MAXSPEED);
   setSpeed(M2,MAXSPEED);
+  
 #ifdef _LIB_CALL_
   block();
 #endif
 }
 
 void moveX(uint8_t position){
+	
   setWantedPos(M3,position);
+  
   if(PIN_SW7==0 && getPos(M3)!=getWantedPos(M3)){
-	setDir(M3,((getPos(M3)<position) ^ RIGHT));
+	setDir(M3,((getPos(M3)<position)?LEFT:RIGHT));
     enableMotor(M3);
     setSpeed(M3,MAXSPEED);
   }
@@ -172,15 +177,15 @@ void selectProduct(uint8_t num){
   disableAllMotors();
   homeX();
   switch(num){
-    case 1: moveXZ(3,3) break;
-    case 2: moveXZ(3,2) break;
-    case 3: moveXZ(3,1) break;
-    case 4: moveXZ(2,3) break;
-    case 5: moveXZ(2,2) break;
-    case 6: moveXZ(2,1) break;
-    case 7: moveXZ(1,3) break;
-    case 8: moveXZ(1,2) break;
-    case 9: moveXZ(1,1) break;
+    case 1: moveXZ(3,3); break;
+    case 2: moveXZ(3,2); break;
+    case 3: moveXZ(3,1); break;
+    case 4: moveXZ(2,3); break;
+    case 5: moveXZ(2,2); break;
+    case 6: moveXZ(2,1); break;
+    case 7: moveXZ(1,3); break;
+    case 8: moveXZ(1,2); break;
+    case 9: moveXZ(1,1); break;
   }
  #ifdef _SYS_CALL_
   syscall_aligned();

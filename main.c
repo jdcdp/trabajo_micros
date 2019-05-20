@@ -20,15 +20,19 @@ void init(){
 // Aqui se llaman a las funciones de inicialización
  motion_init();
  time_init();
+ setup_coin();
+ setup_teclado();
 }
 
 
 int main(){
   init();
-  //setDir(M1,UP);
-  //setDir(M2,UP);
-  // homeZ();
-  //homeX();
+  setDir(M3,RIGHT);
+  //homeAll();
+  //---------
+  //moveZ(150);
+
+
 
   HOLD();
 return 0;

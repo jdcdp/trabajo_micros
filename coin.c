@@ -184,8 +184,8 @@ void setup_coin(){
 	DDRD&= (~(1<<DDD2)); //D2 entrada
 	PORTD|= 1 << PD5; //Inicializo con freno activado
 	
-	EICRA= 1 << ISC20; //Interrupcion INT2 se activa por cualquier flanco 
-	EIMSK= 1 << INT2;  //Activar INT2
+	EICRA|= 1 << ISC20; //Interrupcion INT2 se activa por cualquier flanco 
+	EIMSK|= 1 << INT2;  //Activar INT2
 
 	sei();
 	

@@ -1,4 +1,3 @@
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
@@ -13,7 +12,7 @@ void time_init(){
 
         TIME_OCRA = TIME_MAX; //Set timer TOP_A
 
-        TIME_TCCRB = 0x01; //Preescalado de 0, cuenta cada us (1MHz)
+        TIME_TCCRB = 0x03; //Preescalado de 64, cuenta cada 8 us (8MHz)
 
         TIME_TIMSK |= (1 << OCIE0A); //Enable Interrupt from CTC_A
 	
@@ -35,9 +34,8 @@ uint64_t timenow(){
 void delay(uint16_t ms){
 
 	sei();
-	volatile uint16_t end_time=timenow()+ms*10;
+	volatile uint16_t end_time=timenow()+ms;
 	while (timenow()<end_time);//Use a timer instead
-	cli();
 }
 
 

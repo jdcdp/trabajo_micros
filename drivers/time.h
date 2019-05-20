@@ -6,7 +6,7 @@
 
 //Registros Timer 0
 
-#define TIME_MAX  100 //0.1ms
+#define TIME_MAX  125 //1 ms
 
 #define TIME_TCCRA TCCR0A
 #define TIME_OCRA  OCR0A

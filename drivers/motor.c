@@ -8,18 +8,23 @@
 error
 #endif
 
+
+uint8_t debpos1; //#@#
+uint8_t debpos2; //#@#
+
+
 void motor_init(){
   cli();
 
   //Set optical encoders' interrupts
-  EICRA|=(1<<ISC10 | 1<<ISC11| 1<<ISC00 | 1<<ISC01); //11=rising
+  EICRA|=(1<<ISC10 | 1<<ISC11 | 1<<ISC00 | 1<<ISC01); //11=rising
   EIMSK|=(1<<INT1 | 1<<INT0);
 
   //Set endstops' interrupts
 
   ENDSTOPDDR=0;
   OPTENDDDR&=~(1<<0|1<<1);
-  PCICR = 0b00000100; //PCINT DEL PUERTO K
+  PCICR |= 0b00000100; //PCINT DEL PUERTO K
   PCMSK2 = 0b11111111; //Enable PCINT2
   endstop_state=ENDSTOPS;//compare variable for pcint change detection
 
@@ -114,9 +119,9 @@ uint16_t getWantedPos(uint8_t motnum){
 ISR(ENDSTOP_INTERRUPT){
 
   //read all pin changes
-  switch(ENDSTOPS ^ endstop_state) {
+  switch((ENDSTOPS ^ endstop_state) & ENDSTOPS) {
 
-	case 1<<SW1: ISR_SW1(); break;
+		case 1<<SW1: ISR_SW1(); break;
 
         case 1<<SW2: ISR_SW2(); break;
 
@@ -128,9 +133,9 @@ ISR(ENDSTOP_INTERRUPT){
 
         case 1<<SW6: ISR_SW6(); break;
 
-        case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); delay(5); break;//!Bounces
+        case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); /*delay(5);*/ break;//!Bounces
 
-        case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); delay(5); break;//!Bounces
+        case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); /*delay(5);*/ break;//!Bounces
 
 	//default: PRINT(PCINT ERROR)
   }
@@ -168,6 +173,7 @@ void ISR_SW5(){//Endstop M3_RIGHT
   disableMotor(M3);
   setDir(M3,LEFT);
   setPos(M3,0);
+  unblock();
 }
 
 void ISR_SW6(){//Endstop M3_LEFT
@@ -208,6 +214,7 @@ void ISR_SW7(){//Position detector M3			/*comprobar*/
 }
 
 
+
 void ISR_SW8(){ //M4 step counter
   motor[M4].pos++;
   if (motor[M4].pos==YTURNCOUNT){
@@ -220,6 +227,7 @@ void ISR_SW8(){ //M4 step counter
 
 
 ISR(SO3){//Optical Encoder M1
+	
   if(motor[M1].dir==UP){
     motor[M1].pos++;
   }
@@ -230,10 +238,12 @@ ISR(SO3){//Optical Encoder M1
 	libcall_motorZroutine();
 #endif
 //delay(1);
+debpos1++;
 }
 
 
 ISR(SO4){//Optical Encoder M2
+	
   if(motor[M2].dir==UP){
     motor[M2].pos++;
   }
@@ -244,6 +254,7 @@ ISR(SO4){//Optical Encoder M2
   libcall_motorsync();
 #endif
 //delay(1);
+debpos2++;
 }
 
 
