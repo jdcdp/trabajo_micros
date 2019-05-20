@@ -16,6 +16,10 @@
 
 ## teclado (teclado.h):
 
+**Funciones:**
+
+- *setup_teclado(); Inicializa el teclado
+
 - *product_out(): función que se llama cuando no hay producto para encender LED y seleccionar de nuevo
 
 - *choose_again(): función para dejar seleccionar si el consumidor cambia de idea. 
