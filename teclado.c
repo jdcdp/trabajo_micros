@@ -129,12 +129,12 @@ ISR(INT3_vect) //Piezo eléctrico
 
 void setup_teclado()
 {
-	DDRB = 0b11100001; //Puerto B SALIDA/ENTRADA-TECLADO
-	PORTB = 0b11100000; //Hay que activar todas las salidas para que cualquier tecla pueda generar la señal de interrupción
+	DDRB |= 0b11100001; //Puerto B SALIDA/ENTRADA-TECLADO
+	PORTB |= 0b11100000; //Hay que activar todas las salidas para que cualquier tecla pueda generar la señal de interrupción
 	DDRD &= ~(1 << DDD3);
 
-	PCICR = 0b00000001; //PCINT DEL PUERTO B
-	PCMSK0 = 0b00011100; //Enable PCINT0-7
+	PCICR |= 0b00000001; //PCINT DEL PUERTO B
+	PCMSK0 |= 0b00011100; //Enable PCINT0-7
 	PCIFR |= 0b00000001;
 
 	EICRA |= (1 << ISC31);

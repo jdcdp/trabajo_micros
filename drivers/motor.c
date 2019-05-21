@@ -88,9 +88,9 @@ void setDir(uint8_t motnum, uint8_t direction){
     motor[motnum].dir=0;
   }
    switch(motnum){
-	case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[motnum].dir); break;
-        case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[motnum].dir); break;
-        case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[motnum].dir); break;
+		case M1: bitchange(MOTOR_DIR_PORT,M1_DIR,motor[motnum].dir); break;
+		case M2: bitchange(MOTOR_DIR_PORT,M2_DIR,motor[motnum].dir); break;
+		case M3: bitchange(MOTOR_DIR_PORT,M3_DIR,motor[motnum].dir); break;
   }
 }
 
@@ -121,19 +121,20 @@ uint16_t getWantedPos(uint8_t motnum){
 ISR(ENDSTOP_INTERRUPT){
 
   //read all pin changes
-  switch(ENDSTOPS ^ endstop_state) {
+  
+    switch(ENDSTOPS ^ endstop_state) {
 
-	case 1<<SW1: if (ENDSTOPS & 1<<SW1) {ISR_SW1();} break; //Only rise
+	case 1<<SW1: if (ENDSTOPS & (1<<SW1)) {ISR_SW1();} break; //Only rise
 
-	case 1<<SW2: if (ENDSTOPS & 1<<SW2) {ISR_SW2();} break;
+	case 1<<SW2: if (ENDSTOPS & (1<<SW2)) {ISR_SW2();} break;
 
-	case 1<<SW3: if (ENDSTOPS & 1<<SW3) {ISR_SW3();} break;
+	case 1<<SW3: if (ENDSTOPS & (1<<SW3)) {ISR_SW3();} break;
 
-	case 1<<SW4: if (ENDSTOPS & 1<<SW4) {ISR_SW4();} break;
+	case 1<<SW4: if (ENDSTOPS & (1<<SW4)) {ISR_SW4();} break;
 
-	case 1<<SW5: if (ENDSTOPS & 1<<SW5) {ISR_SW5();} break;
+	case 1<<SW5: if (ENDSTOPS & (1<<SW5)) {ISR_SW5();} break;
 
-	case 1<<SW6: if (ENDSTOPS & 1<<SW1) {ISR_SW6();} break;
+	case 1<<SW6: if (ENDSTOPS & (1<<SW6)) {ISR_SW6();} break;
 
 	case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); delay(5); break;//Rise and fall, debounce
 
@@ -186,7 +187,7 @@ void ISR_SW5(){//Endstop M3_RIGHT
 void ISR_SW6(){//Endstop M3_LEFT
 
 	disableMotor(M3);
-	setDir(M3,LEFT);
+	setDir(M3,RIGHT);
 }
 
 
@@ -235,8 +236,9 @@ ISR(SO3){//Optical Encoder M1
    libcall_motorsync();
    libcall_motorZroutine();
 #endif
-//delay(1);
+delay(10);
 debpos1++;
+EIFR=1<<INT0;
 }
 
 
@@ -252,8 +254,9 @@ ISR(SO4){//Optical Encoder M2
    libcall_motorsync();
    libcall_motorZroutine();
 #endif
-//delay(1);
+delay(10);
 debpos2++;
+EIFR=1<<INT0;
 }
 
 

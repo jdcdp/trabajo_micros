@@ -9,8 +9,11 @@
 #include "drivers/motor.h"
 #include <stdint.h>
 
-#define ENC2FLOOR1 100 //encoder steps for floor level
-#define ENC2FLOOR2 200
+#define ENC1FLOOR1 18 //encoder steps for floor level
+#define ENC1FLOOR2 107
+#define ENC1FLOOR3 300
+#define ENC2FLOOR1 30 //encoder steps for floor level
+#define ENC2FLOOR2 222
 #define ENC2FLOOR3 300
 #define ZOFFSET	   5  //Offset for x alignment
 

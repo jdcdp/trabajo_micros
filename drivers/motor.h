@@ -33,13 +33,15 @@
 
 //Variables and types
 
-struct motor {
+typedef struct {
   uint8_t dir;
   uint16_t spd;
   uint8_t en;
   uint16_t pos;
   uint16_t fpos;
-} motor[4];
+}motores;
+
+motores motor[4];
 
 uint8_t endstop_state;
 

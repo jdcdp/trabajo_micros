@@ -42,6 +42,8 @@ ISR(TIMER0_COMPA_vect);
 #define BARRERA_TIMSK  TIMSK3
 
 
+
+
 //Variables y Funciones
 
 void time_init();

@@ -9,7 +9,7 @@
 void setup_motion(){
 
         motor_init();
-        homeAll();
+        //homeAll();
 }
 
 
@@ -17,7 +17,7 @@ void setup_motion(){
 #ifdef  _LIB_CALL_
 
 void libcall_motorsync(){
-  if(motor[M1].dir==UP){
+ /* if(motor[M1].dir==UP){
 	int16_t delta;
 	delta=(getPos(M1)-getPos(M2));
 	if (delta>MAXDELTA){
@@ -30,14 +30,23 @@ void libcall_motorsync(){
 		setSpeed(M1,max(motor[M1].spd,motor[M2].spd));
 	      	setSpeed(M2,max(motor[M1].spd,motor[M2].spd));
 	}
-  }
+  }*/
 }
 
 
 
+int32_t debug1;
+int32_t debug2;
+
 void libcall_motorZroutine(){
-   int16_t d;
-   d=min(abs(motor[M1].fpos-motor[M1].pos),abs(motor[M2].fpos-motor[M2].pos));
+  /* int32_t d,d1,d2;
+   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
+   d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
+   if(d1<0){d1=-d1;}
+   if(d2<0){d2=-d2;}
+   debug1=d1;
+   debug2=d2;
+   d=min(d1,d2);
    if(d<ZALIGNSTOP){
 
 	disableMotor(M1);
@@ -50,7 +59,7 @@ void libcall_motorZroutine(){
 
 	setSpeed(M1,ZALIGNSPEED);
 	setSpeed(M2,ZALIGNSPEED);
-   }
+   }*/
 }
 
 
@@ -79,31 +88,29 @@ void homeX(){
 	setDir(M3,RIGHT);
 	enableMotor(M3);
 	setSpeed(M3, MAXSPEED);
+ 
   }
-
-#ifdef _LIB_CALL_
-  block();
-#endif
 }
 
 void homeZ(){
+	
   if((ENDSTOPS & (1<<SW2))==0){
-
+	//motor[M1].pos=888;
 	setDir(M1,DOWN);
 	enableMotor(M1);
 	setSpeed(M1, MAXSPEED);
+
   }
 
   if((ENDSTOPS & (1<<SW4))==0){
 
+	//motor[M2].pos=888;
 	setDir(M2,DOWN);
 	enableMotor(M2);
 	setSpeed(M2, MAXSPEED);
   }
 
-#ifdef 	_LIB_CALL_
-  block();
-#endif
+
 }
 
 
@@ -131,7 +138,7 @@ void moveX(uint8_t position){
     setWantedPos(M3,position);
     enableMotor(M3);
     setSpeed(M3,MAXSPEED);
-  }
+  
 #ifdef _LIB_CALL_
   block();
 #endif
