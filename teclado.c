@@ -10,9 +10,11 @@ uint8_t keypad_in = 0; //Variable que almacena el valor enmascarado del teclado
 uint8_t already_selected = 0; //Variable para determinar si ya hay un producto seleccionado en proceso
 uint8_t enable_blink = 0;
 uint8_t check = 1; //Para la consulta periódica
+uint8_t send = 0;
 
 uint8_t posicion = 0;
 uint8_t enviado = 0;
+uint8_t aux = 0;
 
 
 //Funciones para integración
@@ -20,7 +22,7 @@ uint8_t enviado = 0;
 void product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido (o cuando hay dinero de más??Guille)
 {
     PORTB |= (1 << PB0);
-    delay(100);
+    delayMs(100);
     PORTB &= ~(1 << PB0);
     already_selected = 0; //Dejamos seleccionar de nuevo
 }
@@ -63,7 +65,7 @@ void position(int pos)
 		enviado++;
 		already_selected = 1;
 		//selectProduct(pos); //Envio posición a Jaime
-		
+		send = 1;
 	}else
 	{
 		enable_blink = 1;
@@ -110,6 +112,12 @@ ISR(PCINT0_vect) //Función asociado a las interrupciones del teclado
 		}
 		delayMs(1);
 		PORTB = 0b11100000;
+		if(send == 1)
+		{
+			aux = posicion;
+/*			selectProduct(posicion);*/
+			send = 0;
+		}
 		debounceMs(); //Cambiar en función de la función común de antirrebotes
 	}
 }
