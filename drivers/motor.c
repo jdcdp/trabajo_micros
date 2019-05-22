@@ -122,27 +122,27 @@ ISR(ENDSTOP_INTERRUPT){
 
   //read all pin changes
   
+   
     switch(ENDSTOPS ^ endstop_state) {
 
-	case 1<<SW1: if (ENDSTOPS & (1<<SW1)) {ISR_SW1();} break; //Only rise
+	case 1<<SW1: PCMSK2 &= ~1<<SW1; delay(3); if (ENDSTOPS & (1<<SW1)) {ISR_SW1();} break; //Only rise
 
-	case 1<<SW2: if (ENDSTOPS & (1<<SW2)) {ISR_SW2();} break;
+	case 1<<SW2: PCMSK2 &= ~1<<SW2; delay(3); if (ENDSTOPS & (1<<SW2)) {ISR_SW2();} break;
 
-	case 1<<SW3: if (ENDSTOPS & (1<<SW3)) {ISR_SW3();} break;
+	case 1<<SW3: PCMSK2 &= ~1<<SW3; delay(3); if (ENDSTOPS & (1<<SW3)) {ISR_SW3();} break;
 
-	case 1<<SW4: if (ENDSTOPS & (1<<SW4)) {ISR_SW4();} break;
+	case 1<<SW4: PCMSK2 &= ~1<<SW4; delay(3); if (ENDSTOPS & (1<<SW4)) {ISR_SW4();} break;
+		
+	case 1<<SW5: PCMSK2 &= ~1<<SW5; delay(3); if (ENDSTOPS & (1<<SW5)) {ISR_SW5();} break;
 
-	case 1<<SW5: if (ENDSTOPS & (1<<SW5)) {ISR_SW5();} break;
+	case 1<<SW6: PCMSK2 &= ~1<<SW6; delay(3); if (ENDSTOPS & (1<<SW6)) {ISR_SW6();} break;
 
-	case 1<<SW6: if (ENDSTOPS & (1<<SW6)) {ISR_SW6();} break;
+	case 1<<SW7: PCMSK2 &= ~1<<SW7; delay(3); ISR_SW7();  break;//Rise and fall
 
-	case 1<<SW7: PCMSK2 &= ~1<<6; ISR_SW7(); delay(5); break;//Rise and fall, debounce
-
-	case 1<<SW8: PCMSK2 &= ~1<<7; ISR_SW8(); delay(5); break;
+	case 1<<SW8: PCMSK2 &= ~1<<SW8; delay(3); ISR_SW8(); break;
 
 	//default: PRINT(PCINT ERROR)
   }
-
   endstop_state=ENDSTOPS;
   PCMSK2 = 0xFF;
 }
@@ -201,6 +201,7 @@ void ISR_SW7(){//Position detector M3			/*comprobar*/
 			setDir(M3,RIGHT);
 			//delay?
 			disableMotor(M3);
+			unblock();
 		}
 	}
    }
@@ -236,9 +237,9 @@ ISR(SO3){//Optical Encoder M1
    libcall_motorsync();
    libcall_motorZroutine();
 #endif
-delay(10);
+delay(50);
 debpos1++;
-EIFR=1<<INT0;
+EIFR|=1<<INT0;
 }
 
 
@@ -254,9 +255,9 @@ ISR(SO4){//Optical Encoder M2
    libcall_motorsync();
    libcall_motorZroutine();
 #endif
-delay(10);
+delay(50);
 debpos2++;
-EIFR=1<<INT0;
+EIFR|=1<<INT1;
 }
 
 

@@ -27,7 +27,7 @@
 
 #define YTURNCOUNT	10 //number of steps to signal supposed product release
 
-#define ZALIGNSLOW	5 //Z step offset to slow movement
+#define ZALIGNSLOW	10 //Z step offset to slow movement
 #define ZALIGNSPEED	0xAFFF //Speed when slowing
 #define ZALIGNSTOP	2 //Z step offset to stop movement
 

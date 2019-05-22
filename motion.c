@@ -39,7 +39,7 @@ int32_t debug1;
 int32_t debug2;
 
 void libcall_motorZroutine(){
-  /* int32_t d,d1,d2;
+   int32_t d,d1,d2;
    d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
    d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
    if(d1<0){d1=-d1;}
@@ -59,7 +59,7 @@ void libcall_motorZroutine(){
 
 	setSpeed(M1,ZALIGNSPEED);
 	setSpeed(M2,ZALIGNSPEED);
-   }*/
+   }
 }
 
 
@@ -88,17 +88,20 @@ void homeX(){
 	setDir(M3,RIGHT);
 	enableMotor(M3);
 	setSpeed(M3, MAXSPEED);
+	delay(5);
+	block();
  
   }
 }
 
 void homeZ(){
-	
+	int blks=0;
   if((ENDSTOPS & (1<<SW2))==0){
 	//motor[M1].pos=888;
 	setDir(M1,DOWN);
 	enableMotor(M1);
 	setSpeed(M1, MAXSPEED);
+	blks++;
 
   }
 
@@ -108,8 +111,12 @@ void homeZ(){
 	setDir(M2,DOWN);
 	enableMotor(M2);
 	setSpeed(M2, MAXSPEED);
+	blks++;
+  
   }
-
+  while(blks--){
+	  block();
+  }
 
 }
 
@@ -126,22 +133,19 @@ void moveZ(uint16_t position){
   enableMotor(M2);
   setSpeed(M1,MAXSPEED);
   setSpeed(M2,MAXSPEED);
-
-#ifdef _LIB_CALL_
   block();
-#endif
+
+
 }
 
 void moveX(uint8_t position){
 
-    setDir(M3,((getPos(M3)<position)?LEFT:RIGHT));
+    setDir(M3,LEFT);
     setWantedPos(M3,position);
     enableMotor(M3);
     setSpeed(M3,MAXSPEED);
+	block();
   
-#ifdef _LIB_CALL_
-  block();
-#endif
 }
 
 

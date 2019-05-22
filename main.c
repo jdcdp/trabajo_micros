@@ -14,7 +14,7 @@
 void init(){
 // Aqui se llaman a las funciones de inicialización
  setup_time();
- //setup_coin();
+ setup_coin();
  setup_motion();
  //setup_teclado();
 }
@@ -22,10 +22,10 @@ void init(){
 
 int main(){
   init();  
-  //homeAll();
-  //block();
-  //moveZ(100);
-  //  
+  homeAll();
+  moveZ(105); 
+  moveX(2);
+  moveZ(100);
 
 
 
