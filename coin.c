@@ -56,7 +56,7 @@ void check_saldo(){
 void abrir_barrera(){
 	
 	//PROBAR MACRO SW9_PIN
-	if( (PIND & 0b00000100) != 0){ //Barrera Cerrada es 1
+	if( (SW9_PIN) != 0){ //Barrera Cerrada es 1
 		PORTD &= ~(1<<PD5); //Encender M5
 	}
 	
@@ -64,7 +64,7 @@ void abrir_barrera(){
 
 void cerrar_barrera(){
 	
-	if( (PIND & 0b00000100) == 0){ //Barrera Abierta es 0 
+	if( (SW9_PIN) == 0){ //Barrera Abierta es 0 
 		PORTD &= ~(1<<PD5); //Encender M5
 	}
 	
@@ -124,31 +124,33 @@ ISR(S01_TIMERn_CAPT_vect){
 	if((S01_PIN) != 0){ //Flanco Subida
 		
 		//Hacer que capture con flanco de bajada de S01 (Bit6=0)
-		S01_TCCRnB&= (~(1<<ICES4));
+		S01_TCCRnB &= (~(1<<ICES4));
 		
 		//Cojo primer punto del tiempo
-		ta1=(uint16_t)S01_ICRn;
-		tb1=(uint16_t)S01_ICRn;
+		ta1 = (uint16_t)S01_ICRn;
+		tb1 = (uint16_t)S01_ICRn;
 	
 	}
 
 	if((S01_PIN) == 0){ //Flanco Bajada
 		
-		S01_TCCRnB|= 1<<ICES4; //Hacer que capture con flanco de subida de S01 (Bit6=1)
+		S01_TCCRnB |= 1<<ICES4; //Hacer que capture con flanco de subida de S01 (Bit6=1)
 		
-		ta2=(uint16_t)S01_ICRn;
-		tb2=(uint16_t)S02_ICRn;
+		ta2 = (uint16_t)S01_ICRn;
+		tb2 = (uint16_t)S02_ICRn;
 
-		ta=ta2-ta1;
-		tb=tb2-tb1;
+		ta = ta2-ta1;
+		tb = tb2-tb1;
 		
-		relacion=(float)ta/tb;
-		ultima_moneda= calculate_ultima_moneda(relacion);
+		relacion = (float)ta/tb;
+		ultima_moneda = calculate_ultima_moneda(relacion);
 		
 		//Mover Barrera
 		if(ultima_moneda != -1){
+			
 			abrir_barrera();
 			esperar_moneda();
+			
 		}	
 		
 		add_saldo(ultima_moneda);
@@ -165,27 +167,27 @@ void setup_coin(){
 	//Monedero-------------------------------------------------
 	//Timers para Input Capture
 	
-	S01_TIMSKn= 1<<ICIE4; //Activar rutina interrupcion por input capture
-	S02_TIMSKn=0x00; //No necesita rutina de interrupcion
+	S01_TIMSKn = 1<<ICIE4; //Activar rutina interrupcion por input capture
+	S02_TIMSKn = 0x00; //No necesita rutina de interrupcion
 
-	S01_TCCRnB= 1<<ICES4; //Hacer que capture sea por flanco de subida de S01 (Bit6=1)
-	S01_TCCRnB|= 1<<ICNC4; //Antirruido
+	S01_TCCRnB = 1<<ICES4; //Hacer que capture sea por flanco de subida de S01
+	S01_TCCRnB |= 1<<ICNC4; //Antirruido
 
-	S02_TCCRnB= 1<<ICES1;	//Hacer que capture sea por flanco de subida de S02 (Bit6=1)
-	S02_TCCRnB|= 1<<ICNC1;  //Antirruido
+	S02_TCCRnB = 1<<ICES1;	//Hacer que capture sea por flanco de subida de S02
+	S02_TCCRnB |= 1<<ICNC1;  //Antirruido
 	
 	//Arrancar Contadores con Preescalado de 8 (Bit1=1)
-	S01_TCCRnB|= 1<<CS41;
-	S02_TCCRnB|= 1<<CS11;
+	S01_TCCRnB |= 1<<CS41;
+	S02_TCCRnB |= 1<<CS11;
 
 
     //Barrera---------------------------------------------------
-	DDRD|= 1<<DDD5; // D5 salida
-	DDRD&= (~(1<<DDD2)); //D2 entrada
-	PORTD|= 1 << PD5; //Inicializo con freno activado
+	DDRD |= 1<<DDD5; // D5 salida
+	DDRD &= (~(1<<DDD2)); //D2 entrada
+	PORTD |= 1<<PD5; //Inicializo con freno activado
 	
-	EICRA|= 1 << ISC20; //Interrupcion INT2 se activa por cualquier flanco 
-	EIMSK|= 1 << INT2;  //Activar INT2
+	EICRA |= 1<<ISC20; //Interrupcion INT2 se activa por cualquier flanco 
+	EIMSK |= 1<<INT2;  //Activar INT2
 
 	sei();
 	
