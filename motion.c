@@ -35,17 +35,13 @@ void libcall_motorsync(){
 
 
 
-int32_t debug1;
-int32_t debug2;
 
 void libcall_motorZroutine(){
    int32_t d,d1,d2;
-   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
+   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos); //por alguna razon devuelven numeros negativos
    d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
    if(d1<0){d1=-d1;}
    if(d2<0){d2=-d2;}
-   debug1=d1;
-   debug2=d2;
    d=min(d1,d2);
    if(d<ZALIGNSTOP){
 
@@ -63,14 +59,15 @@ void libcall_motorZroutine(){
 }
 
 
-void unblock(){
-	is_blocked=0;
-}
 
-void block(){
-	is_blocked=1;
+void block(){            //funcion que para la ejecución del siguiente comando (sin ser bloqueante)
+        is_blocked=1;    //para que las instrucciones sean consecutivas en lugar de simultáneas
 	sei();
 	while(is_blocked){}
+}
+
+void unblock(){
+        is_blocked=0;
 }
 
 #endif
@@ -83,6 +80,7 @@ void homeAll(){
 }
 
 void homeX(){
+
   if((ENDSTOPS & (1<<SW5))==0){ //If the motor is not already in home position
 
 	setDir(M3,RIGHT);
@@ -90,19 +88,18 @@ void homeX(){
 	setSpeed(M3, MAXSPEED);
 	delay(5);
 	block();
- 
   }
 }
 
 void homeZ(){
-	int blks=0;
+
+  uint8_t blks=0;
   if((ENDSTOPS & (1<<SW2))==0){
 	//motor[M1].pos=888;
 	setDir(M1,DOWN);
 	enableMotor(M1);
 	setSpeed(M1, MAXSPEED);
 	blks++;
-
   }
 
   if((ENDSTOPS & (1<<SW4))==0){
@@ -112,52 +109,53 @@ void homeZ(){
 	enableMotor(M2);
 	setSpeed(M2, MAXSPEED);
 	blks++;
-  
   }
   while(blks--){
 	  block();
   }
-
 }
 
 
 
 void moveZ(uint16_t position){
 
-
-  setDir(M1,((getPos(M1)<position)?UP:DOWN));
-  setDir(M2,((getPos(M2)<position)?UP:DOWN));
-  setWantedPos(M1,position);
-  setWantedPos(M2,position);
-  enableMotor(M1);
-  enableMotor(M2);
-  setSpeed(M1,MAXSPEED);
-  setSpeed(M2,MAXSPEED);
-  block();
-
+	setDir(M1,((getPos(M1)<position)?UP:DOWN));
+	setDir(M2,((getPos(M2)<position)?UP:DOWN));
+	setWantedPos(M1,position);
+	setWantedPos(M2,position);
+	enableMotor(M1);
+	enableMotor(M2);
+	setSpeed(M1,MAXSPEED);
+	setSpeed(M2,MAXSPEED);
+  #ifdef _BLOCK_
+	block();
+  #endif
 
 }
 
 void moveX(uint8_t position){
 
-    setDir(M3,LEFT);
-    setWantedPos(M3,position);
-    enableMotor(M3);
-    setSpeed(M3,MAXSPEED);
+	setDir(M3,LEFT);
+	setWantedPos(M3,position);
+	enableMotor(M3);
+	setSpeed(M3,MAXSPEED);
+  #ifdef _BLOCK_
 	block();
-  
+  #endif
 }
 
 
 void moveY(){
-  enableMotor(M4);
-  setSpeed(M4,MAXSPEED);
+
+	enableMotor(M4);
+	setSpeed(M4,MAXSPEED);
 }
 
 void stopY(){
-  disableMotor(M4);
-  motor[M4].pos=0;
-  homeAll();
+
+	disableMotor(M4);
+	motor[M4].pos=0;
+	homeAll();
 }
 
 

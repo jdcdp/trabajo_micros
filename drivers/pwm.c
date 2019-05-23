@@ -13,7 +13,7 @@ void pwm_init(){
 	PWM_OCR_M2 = PWM_MAX;
 
 	PWM_OCR_M3 = PWM_MAX;
-	
+
 	PWM_TOP = PWM_MAX;
 
 	PWM_TCCRA = (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0) | (1<<COM1C1) | (1<<COM1C0); //set toggle in all channels

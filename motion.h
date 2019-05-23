@@ -9,18 +9,21 @@
 #include "drivers/motor.h"
 #include <stdint.h>
 
-#define ENC1FLOOR1 18 //encoder steps for floor level
+#define ENC1FLOOR1 18 //Z encoder floor levels
 #define ENC1FLOOR2 107
-#define ENC1FLOOR3 300
-#define ENC2FLOOR1 30 //encoder steps for floor level
-#define ENC2FLOOR2 222
-#define ENC2FLOOR3 300
+#define ENC1FLOOR3 170
+#define ENC2FLOOR1 30
+#define ENC2FLOOR2 95
+#define ENC2FLOOR3 150
 #define ZOFFSET	   5  //Offset for x alignment
 
 #define _LIB_CALL_
 #ifdef 	_LIB_CALL_
 
 #define MAXDELTA 10 //Minimum offset to start correction
+
+#define _BLOCK_ //Whether movement instructions are simultaneous or consecutive
+
 
 uint8_t is_blocked;
 

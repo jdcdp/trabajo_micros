@@ -22,8 +22,12 @@
 
 #define MAXSPEED 	0xFFFF //(0 to FFFF)
 
-#define TOUCH_DELAY 	300 /*Delay in ms to move around M3's trigger point*/
-#define SLOW_CONTACT 	0x2FFF /*Slow speed for M3 alignment*/
+
+/*	Deprecated
+
+#define TOUCH_DELAY 	300 //Delay in ms to move around M3's trigger point
+#define SLOW_CONTACT 	0x2FFF //Slow speed for M3 alignment
+*/
 
 #define YTURNCOUNT	10 //number of steps to signal supposed product release
 

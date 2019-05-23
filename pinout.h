@@ -37,6 +37,17 @@
 #define TIME_TCCRA 	TCCR0A
 #define TIME_OCR 	OCR0A
 #define TIME_TCCRB	TCCR0B
+#define TIME_TIMSK	TIMSK0
+
+//----------------------------
+//	Barrera
+
+#define BARRERA_TCCRB	TCCR3B
+#define BARRERA_OCRA	OCR3A
+#define BARRERA_CNT	TCNT3
+#define BARRERA_TIMSK	TIMSK3
+//-----------------------------
+
 
 //drivers/pwm.h
 #define PWM_TCCRA	TCCR5A

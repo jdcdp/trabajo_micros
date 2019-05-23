@@ -39,8 +39,8 @@ uint64_t timenow(){
 
 void delay(uint16_t ms){
 
-	sei();
 	volatile uint16_t end_time=timenow()+ms;
+	sei();
 	while (timenow()<end_time);
 }
 
