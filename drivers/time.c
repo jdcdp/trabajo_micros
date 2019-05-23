@@ -54,7 +54,6 @@ void esperar_moneda(){ //Espera a que pase la moneda para cerrar la barrera
 	
 	TIFR3= (1 << OCIE3A); //Quitar posible bandera de interrupcion que haya saltado
 	
-	//PORTB= ~PINB; //PRUEBAS
 }
 
 ISR(TIMER3_COMPA_vect){ //Solo para esperar a la moneda
