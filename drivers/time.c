@@ -19,11 +19,6 @@ void setup_time(){
 
 //----------------------------------------------------------------------------
 //				Barrera:
-	//Modo CTC
-	BARRERA_TCCRB |= (1<<WGM32);
-
-	//Tiempos necesarios de espera
-	BARRERA_OCRA = BARRERA_ESPERA; //Set timer TOP_A; 8000 es 1ms
 
 	BARRERA_TCCRB |= (1<<WGM32); //Modo CTC 
 	BARRERA_TCCRB |= (1<<CS31)|(1<<CS30); //Con preescalado 64, cuenta cada 8us (8MHz)
