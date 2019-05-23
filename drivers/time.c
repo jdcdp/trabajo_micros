@@ -48,10 +48,7 @@ ISR(TIMER0_COMPA_vect){
 //			Barrera
 
 void esperar_moneda(){ //Espera a que pase la moneda para cerrar la barrera
-	
-	//Tiempos necesarios de espera
-	//MIRAR SI ES UNISiGNED INT O NO PARA PONER TIPO EN LA OPERACION
-	
+
 	BARRERA_TIMSK |= (1 << OCIE3A); //Poner interrupcion de CTC_A
 	BARRERA_OCRA = BARRERA_CNT + BARRERA_ESPERA ; //Set timer TOP_A;
 	
@@ -66,5 +63,5 @@ ISR(TIMER3_COMPA_vect){ //Solo para esperar a la moneda
 	BARRERA_TIMSK &= ~(1 << OCIE3A);
 
 	cerrar_barrera();
-//----------------------------------------------------------------------------
+
 }
