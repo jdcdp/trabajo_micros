@@ -56,7 +56,7 @@ void check_saldo(){
 void abrir_barrera(){
 	
 	//PROBAR MACRO SW9_PIN
-	if( (PIND & 0b00000100) != 0){ //Barrera Cerrada es 1
+	if( (SW9_PIN) != 0){ //Barrera Cerrada es 1
 		PORTD &= ~(1<<PD5); //Encender M5
 	}
 	
@@ -64,7 +64,7 @@ void abrir_barrera(){
 
 void cerrar_barrera(){
 	
-	if( (PIND & 0b00000100) == 0){ //Barrera Abierta es 0 
+	if( (SW9_PIN) == 0){ //Barrera Abierta es 0 
 		PORTD &= ~(1<<PD5); //Encender M5
 	}
 	
