@@ -5,6 +5,11 @@
 #ifndef _MOTION_H_
 #define _MOTION_H_
 
+#define _LIB_CALL_ //Macro para la conectividad entre librerias internas
+#define _SYS_CALL_ //Macro para integración
+#define _BLOCK_ //Determina si las instrucciones de movimiento son simultáneas or consecutivas
+
+
 #include "macros.h"
 #include "drivers/motor.h"
 #include <stdint.h>
@@ -15,14 +20,16 @@
 #define ENC2FLOOR1 30
 #define ENC2FLOOR2 95
 #define ENC2FLOOR3 150
-#define ZOFFSET	   5  //Offset for x alignment
+#define ZOFFSET	   10  //Offset for x alignment
 
-#define _LIB_CALL_
+#ifndef _LIB_CALL_
+error
+#endif
+
 #ifdef 	_LIB_CALL_
 
-#define MAXDELTA 10 //Minimum offset to start correction
+//#define MAXDELTA 10 //Minimum offset to start correction
 
-#define _BLOCK_ //Whether movement instructions are simultaneous or consecutive
 
 
 uint8_t is_blocked;

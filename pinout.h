@@ -35,7 +35,7 @@
 
 //drivers/time_m.h
 #define TIME_TCCRA 	TCCR0A
-#define TIME_OCR 	OCR0A
+#define TIME_OCRA 	OCR0A
 #define TIME_TCCRB	TCCR0B
 #define TIME_TIMSK	TIMSK0
 

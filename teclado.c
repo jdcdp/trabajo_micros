@@ -19,12 +19,22 @@ uint8_t aux = 0;
 
 //Funciones para integración
 
-void product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido (o cuando hay dinero de más??Guille)
+void delayMs(uint8_t ms)
+{
+	for(volatile uint8_t i = 0; i < ms; i++)
+	{
+		for(volatile uint8_t j = 0; j < 421; j++);
+	}
+}
+
+
+void syscall_product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido (o cuando hay dinero de más??Guille)
 {
     PORTB |= (1 << PB0);
     delayMs(100);
     PORTB &= ~(1 << PB0);
     already_selected = 0; //Dejamos seleccionar de nuevo
+	stopY();
 }
 
 void choose_again()
@@ -40,13 +50,6 @@ void debounceMs() //Hay que sustituirlo por el de uso común
 	PCIFR |= 0b00000001;
 }
 
-void delayMs(int ms)
-{
-	for(volatile int i = 0; i < ms; i++)
-	{
-		for(volatile int j = 0; j < 421; j++);
-	}
-}
 
 
 /*ISR(TIMER1_OVF_vect)//Sustituible, es necesario una función de consulta periódica

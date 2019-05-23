@@ -5,72 +5,25 @@
 #include "motion.h"
 #include "drivers/motor.h"
 
+#ifndef _LIB_CALL_
+error
+#endif
+
+#ifndef _BLOCK_
+error
+#endif
+
+#ifndef _SYS_CALL_
+error
+#endif
+
+
 
 void setup_motion(){
 
         motor_init();
-        //homeAll();
+        homeAll();
 }
-
-
-#define _LIB_CALL_
-#ifdef  _LIB_CALL_
-
-void libcall_motorsync(){
- /* if(motor[M1].dir==UP){
-	int16_t delta;
-	delta=(getPos(M1)-getPos(M2));
-	if (delta>MAXDELTA){
-		setSpeed(M1,motor[M2].spd*MAXDELTA/abs(delta)); //Check how it behaves
-	}
-	else if (delta<-MAXDELTA){
-		setSpeed(M2,motor[M1].spd*MAXDELTA/abs(delta));
-	}
-	else {
-		setSpeed(M1,max(motor[M1].spd,motor[M2].spd));
-	      	setSpeed(M2,max(motor[M1].spd,motor[M2].spd));
-	}
-  }*/
-}
-
-
-
-
-void libcall_motorZroutine(){
-   int32_t d,d1,d2;
-   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos); //por alguna razon devuelven numeros negativos
-   d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
-   if(d1<0){d1=-d1;}
-   if(d2<0){d2=-d2;}
-   d=min(d1,d2);
-   if(d<ZALIGNSTOP){
-
-	disableMotor(M1);
-	disableMotor(M2);
-	enableMotor(M3);
-	unblock();
-   }
-
-   else if (d<ZALIGNSLOW){
-
-	setSpeed(M1,ZALIGNSPEED);
-	setSpeed(M2,ZALIGNSPEED);
-   }
-}
-
-
-
-void block(){            //funcion que para la ejecución del siguiente comando (sin ser bloqueante)
-        is_blocked=1;    //para que las instrucciones sean consecutivas en lugar de simultáneas
-	sei();
-	while(is_blocked){}
-}
-
-void unblock(){
-        is_blocked=0;
-}
-
-#endif
 
 
 void homeAll(){
@@ -86,7 +39,6 @@ void homeX(){
 	setDir(M3,RIGHT);
 	enableMotor(M3);
 	setSpeed(M3, MAXSPEED);
-	delay(5);
 	block();
   }
 }
@@ -94,7 +46,7 @@ void homeX(){
 void homeZ(){
 
   uint8_t blks=0;
-  if((ENDSTOPS & (1<<SW2))==0){
+  if((ENDSTOPS & (1<<SW2))==0){  //If the motor is not already in home position
 	//motor[M1].pos=888;
 	setDir(M1,DOWN);
 	enableMotor(M1);
@@ -185,4 +137,67 @@ void selectProduct(uint8_t num){
   syscall_aligned();
  #endif
 }
+
+
+#ifdef  _LIB_CALL_
+
+void libcall_motorsync(){
+ /* if(motor[M1].dir==UP){			// No es necesaria ya que los motores no tienen problemas de desalineación
+	int16_t delta;
+	delta=(getPos(M1)-getPos(M2));
+	if (delta>MAXDELTA){
+		setSpeed(M1,motor[M2].spd*MAXDELTA/abs(delta)); 
+	}
+	else if (delta<-MAXDELTA){
+		setSpeed(M2,motor[M1].spd*MAXDELTA/abs(delta));
+	}
+	else {
+		setSpeed(M1,max(motor[M1].spd,motor[M2].spd));
+	      	setSpeed(M2,max(motor[M1].spd,motor[M2].spd));
+	}
+  }*/
+}
+
+
+
+
+void libcall_motorZroutine(){
+   int32_t d,d1,d2;
+   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos); //por alguna razon devuelven numeros negativos
+   d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
+   if(d1<0){d1=-d1;}
+   if(d2<0){d2=-d2;}
+   d=min(d1,d2);
+   if(d<ZALIGNSTOP){
+
+	disableMotor(M1);
+	disableMotor(M2);
+	enableMotor(M3);
+ #ifdef _BLOCK_
+	unblock();
+ #endif
+}
+
+   else if (d<ZALIGNSLOW){
+
+	setSpeed(M1,ZALIGNSPEED);
+	setSpeed(M2,ZALIGNSPEED);
+   }
+}
+#endif
+
+
+#ifdef _BLOCK_
+
+void block(){            //funcion que para la ejecución del siguiente comando (sin ser bloqueante)
+        is_blocked=1;    //para que las instrucciones sean consecutivas en lugar de simultáneas
+	sei();
+	while(is_blocked){}
+}
+
+void unblock(){
+        is_blocked=0;
+}
+
+#endif
 

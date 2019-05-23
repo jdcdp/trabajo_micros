@@ -3,6 +3,10 @@
 #ifndef _MOTOR_H_
 #define _MOTOR_H_
 
+#define _LIB_CALL_ //Macro para integración
+#define _BLOCK_ //Determina si las instrucciones de movimiento son simultáneas or consecutivas
+
+
 #include <stdint.h>
 #include <avr/interrupt.h>
 #include "../macros.h"

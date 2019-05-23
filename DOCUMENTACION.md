@@ -1,4 +1,4 @@
-
+﻿
 # Documentación de las librerias
 
 
@@ -49,7 +49,7 @@
 
 **Llamadas externas:**
 
--   *moveY():*
+-   *moveY():* Para el dispensado y vuelve al la posición de descanso
 
 
 
@@ -69,11 +69,9 @@
 
   - *void moveY()*: activa el dispensador
 
-  - *void stopY()*: para el dispensador
+  - *void stopY()*: para el dispensador y vuelve a posición de reposo
 
-  - *uint8_t getState()*: de momento no hace nada pero puede servir para dar  información de la posicion actual
-
-   - *void releaseProduct(uint8_t num)*: Se posiciona en el producto "num" segun la siguiente tabla:
+  - *void releaseProduct(uint8_t num)*: Se posiciona en el producto "num" segun la siguiente tabla:
 
 &nbsp;
 
@@ -98,4 +96,4 @@
 
 -   *syscall_product_out():* notifica al sistema que se ha agotado el producto que se ha pedido
 
--   *syscall_aligned():* notifica al sistema de que los motores están en posición.
+-   *syscall_aligned():* notifica al sistema de que los motores están en posición para el dispensado

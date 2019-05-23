@@ -5,14 +5,14 @@
 #include "avr/interrupt.h"
 #include "motor.h"
 
-#define _LIB_CALL_
+
 #ifndef _LIB_CALL_
 error
 #endif
 
-
-uint8_t debpos1; //#@#
-uint8_t debpos2; //#@#
+#ifndef _BLOCK_
+error
+#endif
 
 
 void motor_init(){
@@ -162,7 +162,9 @@ void ISR_SW2(){//Endstop M1_LOW
 	disableMotor(M1);
 	setDir(M1,UP);
 	setPos(M1,0);
+ #ifdef _BLOCK_
 	unblock();
+ #endif
 }
 
 void ISR_SW3(){//Endstop M2_HIGH
@@ -176,7 +178,9 @@ void ISR_SW4(){//Endstop M2_LOW
 	disableMotor(M2);
 	setDir(M2,UP);
  	setPos(M2,0);
-	unblock();
+ #ifdef _BLOCK_
+    unblock();
+ #endif
 }
 
 void ISR_SW5(){//Endstop M3_RIGHT
@@ -184,7 +188,9 @@ void ISR_SW5(){//Endstop M3_RIGHT
 	disableMotor(M3);
 	setDir(M3,LEFT);
 	setPos(M3,0);
+  #ifdef _BLOCK_
 	unblock();
+  #endif
 }
 
 void ISR_SW6(){//Endstop M3_LEFT
@@ -205,7 +211,9 @@ void ISR_SW7(){//Position detector M3
 			setDir(M3,RIGHT);
 			//delay?
 			disableMotor(M3);
+	#ifdef _BLOCK_
 			unblock();
+	#endif
 		}
 	}
   }

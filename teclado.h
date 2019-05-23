@@ -3,7 +3,7 @@
 
 //Funciones integración
 
-void product_out();
+void syscall_product_out();
 void setup_teclado();
 void choose_again();
 
