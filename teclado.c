@@ -8,32 +8,19 @@
 uint8_t enable = 1; //Asociado al antirrebotes
 uint8_t keypad_in = 0; //Variable que almacena el valor enmascarado del teclado
 uint8_t already_selected = 0; //Variable para determinar si ya hay un producto seleccionado en proceso
-uint8_t enable_blink = 0;
+uint8_t enable_blink = 0;// Variable para habilitar el parpadeo cuando se ha pulsado el teclado habiendo un producto seleccionado
 uint8_t check = 1; //Para la consulta periódica
-uint8_t send = 0;
-
-uint8_t posicion = 0;
-uint8_t enviado = 0;
-uint8_t aux = 0;
-
+uint8_t send = 0; //Variable para enviar la posición a motores al final de la interrupción
+uint8_t posicion = 0; //Variable que almacena el valor de la posicion seleccionada
 
 //Funciones para integración
 
-void delayMs(uint8_t ms)
+void syscall_product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido 
 {
-	for(volatile uint8_t i = 0; i < ms; i++)
-	{
-		for(volatile uint8_t j = 0; j < 421; j++);
-	}
-}
-
-
-void syscall_product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido (o cuando hay dinero de más??Guille)
-{
-    PORTB |= (1 << PB0);
-    delayMs(100);
-    PORTB &= ~(1 << PB0);
-    already_selected = 0; //Dejamos seleccionar de nuevo
+    	PORTB |= (1 << PB0);
+    	delayMs(100);
+    	PORTB &= ~(1 << PB0);
+    	already_selected = 0; //Dejamos seleccionar de nuevo
 	stopY();
 }
 
@@ -43,40 +30,34 @@ void choose_again()
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void debounceMs() //Hay que sustituirlo por el de uso común
+void delayMs(uint8_t ms)
+{
+	for(volatile uint8_t i = 0; i < ms; i++)
+	{
+		for(volatile uint8_t j = 0; j < 421; j++); //Cada 421 ciclos equivale a 1 ms
+	}
+}
+
+void debounceMs() //Antirrebotes
 {
 	delayMs(8);
 	enable = 1;
 	PCIFR |= 0b00000001;
 }
 
-
-
-/*ISR(TIMER1_OVF_vect)//Sustituible, es necesario una función de consulta periódica
+void position(int pos) //Función para almacenar el valor de la posición seleccionada y modificar valores de otras variables
 {
-	check = 1;
-}*/
-
-
-void position(int pos)
-{
-	
 	enable = 0;
 	if(already_selected == 0)
 	{
 		posicion = pos;
-		enviado++;
 		already_selected = 1;
-		//selectProduct(pos); //Envio posición a Jaime
 		send = 1;
 	}else
 	{
 		enable_blink = 1;
 	}
 }
-
-
-
 
 void blink_led() //Parpadeo LED
 {
@@ -117,15 +98,14 @@ ISR(PCINT0_vect) //Función asociado a las interrupciones del teclado
 		PORTB = 0b11100000;
 		if(send == 1)
 		{
-			aux = posicion;
-/*			selectProduct(posicion);*/
+			selectProduct(posicion); //Enviamos la posición a los motores
 			send = 0;
 		}
-		debounceMs(); //Cambiar en función de la función común de antirrebotes
+		debounceMs(); 
 	}
 }
 
-ISR(INT3_vect) //Piezo eléctrico
+ISR(INT3_vect) //Piezo eléctrico, nos permite volver a enviar una posición a motores
 {
 	already_selected = 0;
 }
@@ -138,33 +118,9 @@ void setup_teclado()
 
 	PCICR |= 0b00000001; //PCINT DEL PUERTO B
 	PCMSK0 |= 0b00011100; //Enable PCINT0-7
-	PCIFR |= 0b00000001;
 
-	EICRA |= (1 << ISC31);
+	EICRA |= (1 << ISC31); //Flanco de bajada para el piezoeléctrico
 	EIMSK |= (1 << INT3);
 
- /*	TCCR1B |= (1<<CS12);  //Preescalado 256
- 	TCNT1 = 65536-2*(8000000/256);
- 	TIMSK1 |= (1<<TOIE1);*/
 }
 
-
-
-
-/*int main(void) //EJEMPLO DE POSIBLE CONSULTA PERIÓDICA
-{
-	cli();
-	setup_teclado();
-	sei();
-	while (1)
-	{
- 		if(check)
- 		{
-			if(enable_blink)
-			{
- 			blink_led();
-			enable_blink = 0;
- 			}
- 		}
-	}
-}*/
