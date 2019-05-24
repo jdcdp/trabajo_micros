@@ -24,7 +24,7 @@ uint8_t aligned;
 
 void check_saldo(){
 	
-	if(saldo > 1.20){
+	if(saldo > 1.20 && aligned){
 		moveY();
 		aligned=0;
 	}
