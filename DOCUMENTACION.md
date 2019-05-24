@@ -24,9 +24,8 @@
 
 - *setup_teclado():* Inicializa el teclado
 
-- *product_out():* función que se llama cuando no hay producto para encender LED y seleccionar de nuevo
+- *syscall_product_out():* función que se llama cuando no hay producto para encender LED y seleccionar de nuevo
 
-- *choose_again():* función para dejar seleccionar si el consumidor cambia de idea.
 
 ## Sensor de monedas(coin.h):
 
@@ -136,3 +135,7 @@ Como ultimo comentario sobre esta parte del código también existe soporte para
 Flujograma monedero:
 
 ![monedero](ejemplos/monedero.png)
+
+Flujograma teclado:
+
+![teclado](teclado.png)
