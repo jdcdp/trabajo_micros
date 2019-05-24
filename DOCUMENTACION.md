@@ -134,4 +134,5 @@ Flujograma ejemplo M3:
 Como ultimo comentario sobre esta parte del código también existe soporte para mover la máquina expendedora a una posición dada, incluyendo así parte de la integración. La funcion selectProduct() mueve la expendedora a la posicicion adecuada para el dispensado y avisa al sistema mediante la función syscall_alligned() (que deberá implementarse en la integración ). La función stopY() detiene el dispensado y pone a los motores en la posición de origen.
 
 Flujograma monedero:
+
 ![monedero](ejemplos/monedero.png)
