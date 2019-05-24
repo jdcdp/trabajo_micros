@@ -14,6 +14,7 @@
  #define bitchange(port,pin,val) (port=(port & ~(1<<pin))|val<<pin)
  
 
-
-#define abs(n)	(n<0?-n:n)
+ #define ABS(a) \
+   ({ __typeof__ (a) _a = (a); \
+     _a > 0 ? _a : -_a; })
 #endif

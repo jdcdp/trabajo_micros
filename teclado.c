@@ -15,13 +15,24 @@ uint8_t posicion = 0; //Variable que almacena el valor de la posicion selecciona
 
 //Funciones para integración
 
+void delayMs(uint8_t ms) //Problemas al usar delay normal
+{
+	for(volatile uint8_t i = 0; i < ms; i++)
+	{
+		for(volatile uint8_t j = 0; j < 421; j++); //Cada 421 ciclos equivale a 1 ms
+	}
+}
+
+
+
+
 void syscall_product_out() //Se llamaría cuando el contador de vueltas haya llegado al límite establecido 
 {
     	PORTB |= (1 << PB0);
     	delayMs(100);
     	PORTB &= ~(1 << PB0);
     	already_selected = 0; //Dejamos seleccionar de nuevo
-	stopY();
+		stopY();
 }
 
 void choose_again()
@@ -30,13 +41,6 @@ void choose_again()
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void delayMs(uint8_t ms)
-{
-	for(volatile uint8_t i = 0; i < ms; i++)
-	{
-		for(volatile uint8_t j = 0; j < 421; j++); //Cada 421 ciclos equivale a 1 ms
-	}
-}
 
 void debounceMs() //Antirrebotes
 {
@@ -107,7 +111,12 @@ ISR(PCINT0_vect) //Función asociado a las interrupciones del teclado
 
 ISR(INT3_vect) //Piezo eléctrico, nos permite volver a enviar una posición a motores
 {
-	already_selected = 0;
+	if(already_selected) {
+		already_selected = 0;
+		delayMs(8);
+		EIFR|=1<<INT3;
+		stopY();
+	}
 }
 
 void setup_teclado()

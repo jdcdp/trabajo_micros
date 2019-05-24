@@ -146,10 +146,10 @@ void libcall_motorsync(){
 	int16_t delta;
 	delta=(getPos(M1)-getPos(M2));
 	if (delta>MAXDELTA){
-		setSpeed(M1,motor[M2].spd*MAXDELTA/abs(delta)); 
+		setSpeed(M1,motor[M2].spd*MAXDELTA/ABS(delta)); 
 	}
 	else if (delta<-MAXDELTA){
-		setSpeed(M2,motor[M1].spd*MAXDELTA/abs(delta));
+		setSpeed(M2,motor[M1].spd*MAXDELTA/ABS(delta));
 	}
 	else {
 		setSpeed(M1,max(motor[M1].spd,motor[M2].spd));
@@ -163,8 +163,8 @@ void libcall_motorsync(){
 
 void libcall_motorZroutine(){
    int32_t d,d1,d2;
-   d1=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos); //por alguna razon devuelven numeros negativos
-   d2=abs((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
+   d1=ABS((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos); //por alguna razon devuelven numeros negativos
+   d2=ABS((int32_t)motor[M1].fpos-(int32_t)motor[M1].pos);
    if(d1<0){d1=-d1;}
    if(d2<0){d2=-d2;}
    d=min(d1,d2);

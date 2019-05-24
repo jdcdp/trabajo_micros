@@ -1,5 +1,9 @@
-//Archivo de integraciÃ³n
-
+/*
+ * GccApplication4.c
+ *
+ * Created: 24/05/2019 9:37:40
+ * Author : junti
+ */ 
 
 #define _SYS_CALL_ //Macro para integración
 #define _BLOCK_ //Determina si las instrucciones de movimiento son simultáneas or consecutivas
@@ -32,6 +36,4 @@ int main(){
   HOLD();
 return 0;
 }
-
-
 

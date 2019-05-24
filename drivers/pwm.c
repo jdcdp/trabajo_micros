@@ -6,7 +6,7 @@ void pwm_init(){
 
         cli();
 
-	PWM_DDR|= (1<<DDB3) | (1<<DDB4) | (1<<DDB5); //output on all pins
+	PWM_DDR|= (1<<DDL3) | (1<<DDL4) | (1<<DDL5); //output on all pins, REVISAR
 
 	PWM_OCR_M1 = PWM_MAX; //set al outputs to 0
 

@@ -8,9 +8,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
-
+#include "pinout.h"
 #include "coin.h"
 #include "time.h"
+#include "motion.h"
+
 
 uint16_t ta,tb,ta1,tb1,ta2,tb2;
 float relacion;
@@ -19,6 +21,16 @@ int8_t ultima_moneda;
 float saldo;
 
 uint8_t aligned;
+
+void check_saldo(){
+	
+	if(saldo > 1.20){
+		moveY();
+		aligned=0;
+	}
+	
+}
+
 
 void syscall_aligned(){
 	
@@ -44,14 +56,6 @@ int get_ultima_moneda(){
 
 //Funciones Internas---------------------------------------------------
 
-void check_saldo(){
-	
-	if(saldo > 1.20){
-		moveY();
-		aligned=0;
-	}
-	
-}
 
 void abrir_barrera(){
 	
